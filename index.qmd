@@ -3,8 +3,9 @@ title: "Rachel Hua"
 subtitle: "Bioinformatician · University of Southern California"
 about:
   template: trestles
-  image: profile.jpg          # add a square photo here (or delete this line)
-  image-shape: round
+  # Add a square photo named profile.jpg to this folder, then uncomment:
+  # image: profile.jpg
+  # image-shape: round
   links:
     - icon: github
       text: GitHub

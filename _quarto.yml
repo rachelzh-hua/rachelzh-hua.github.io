@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: _site
+  render:
+    - "*.qmd"          # render the site pages only, not README.md
 
 website:
   title: "Rachel Hua"
