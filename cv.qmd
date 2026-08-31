@@ -1,0 +1,38 @@
+---
+title: "CV"
+---
+
+> Placeholder — fill in your real details, or drop in a PDF and link it below.
+> To offer a downloadable PDF, put `cv.pdf` in this folder and uncomment the
+> link.
+
+<!-- [Download PDF](cv.pdf){.btn .btn-outline-primary} -->
+
+## Education
+
+- **University of Southern California** — *degree, field, year*
+
+## Research interests
+
+- Reproducible RNA-seq and spatial-omics reanalysis
+- De novo mutation rate estimation via trio sequencing
+- Population and evolutionary genomics of marine invertebrates
+
+## Selected projects
+
+See [Projects](projects.qmd).
+
+## Skills
+
+- **Genomics:** GATK4, BWA, SAMtools, Picard, VCFtools, PLINK, ADMIXTURE, SnpEff, RepeatMasker
+- **Languages:** R, Python, Shell
+- **Web / delivery:** Quarto, Vercel, static-site portals
+
+## Publications
+
+*Add publications here, or sync from Google Scholar / ORCID.*
+
+## Contact
+
+- Email: [zhihanh@usc.edu](mailto:zhihanh@usc.edu)
+- GitHub: [rachelzh-hua](https://github.com/rachelzh-hua)

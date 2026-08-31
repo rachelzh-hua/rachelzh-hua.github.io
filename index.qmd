@@ -1,0 +1,49 @@
+---
+title: "Rachel Hua"
+subtitle: "Bioinformatician · University of Southern California"
+about:
+  template: trestles
+  image: profile.jpg          # add a square photo here (or delete this line)
+  image-shape: round
+  links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/rachelzh-hua
+    - icon: envelope
+      text: Email
+      href: mailto:zhihanh@usc.edu
+    # - icon: google-scholar   # uncomment & add your Scholar / ORCID
+    #   text: Scholar
+    #   href: https://scholar.google.com/
+    # - icon: linkedin
+    #   text: LinkedIn
+    #   href: https://linkedin.com/in/
+---
+
+I'm a bioinformatician at USC. I build **reproducible reanalysis pipelines** and
+**interactive data portals** that let biologists explore published and in-house
+sequencing datasets, and I work on **population and evolutionary genomics** in
+marine invertebrates.
+
+My work spans two threads:
+
+- **Reanalysis & data portals** — turning raw RNA-seq, spatial, and multiplex
+  imaging datasets into password-gated web portals that collaborators can query
+  without touching the command line.
+- **Genomics pipelines** — variant calling, de novo mutation detection, and
+  population-structure analysis with GATK, BWA, SAMtools, and friends.
+
+See [Projects](projects.qmd) for the details, or my
+[GitHub](https://github.com/rachelzh-hua) for the code.
+
+## Focus areas
+
+- Reproducible RNA-seq & spatial-omics reanalysis
+- De novo mutation rate estimation (trio sequencing)
+- Population genomics of marine invertebrates
+- Building shareable, interactive reports for wet-lab collaborators
+
+## Toolbox
+
+`GATK4` · `BWA` · `SAMtools` · `Picard` · `VCFtools` · `PLINK` · `ADMIXTURE`
+· `SnpEff` · `RepeatMasker` · `R` · `Python` · `Quarto` · `Vercel`

@@ -1,0 +1,107 @@
+---
+title: "Projects"
+---
+
+A mix of reproducible genomics pipelines and interactive reanalysis portals.
+Portals are password-gated deployments built for specific labs — reach out for
+access.
+
+## Genomics pipelines
+
+::: {.project-grid}
+
+::: {.project-card}
+### De novo mutation rate in Pacific oyster
+*Crassostrea gigas* trio sequencing to detect and quantify germline de novo
+mutations. A 22-step workflow: BWA alignment, GATK4 `HaplotypeCaller`, joint
+genotyping, quality filtering, trio-based DNM identification, `SnpEff`
+annotation, and exclusion of repetitive regions (`RepeatMasker`). Retains
+GATK3 indel realignment alongside GATK4 calling.
+
+`GATK3/4` · `BWA` · `SAMtools` · `Picard` · `VCFtools` · `PLINK` · `ADMIXTURE` · `SnpEff`
+
+[Code →](https://github.com/rachelzh-hua/oyster_mutation)
+:::
+
+::: {.project-card}
+### Mussel larvae genomics
+Population-genomics analysis of mussel larvae in R.
+
+`R`
+
+[Code →](https://github.com/rachelzh-hua/mussel_larvae)
+:::
+
+:::
+
+## Reanalysis & data portals
+
+::: {.project-grid}
+
+::: {.project-card}
+### AD microglia RNA-seq portal
+Reanalysis of **GSE332551** — Alzheimer's disease iPSC-derived microglia.
+Interactive expression browser deployed on Vercel.
+
+`Python` · `RNA-seq` · `Vercel`
+
+[Code →](https://github.com/rachelzh-hua/ad-microglia-rnaseq-portal)
+:::
+
+::: {.project-card}
+### AML Citation Concierge
+Spermidine reanalysis portal for acute myeloid leukemia, with a citation-aware
+concierge interface.
+
+`HTML` · `Vercel`
+
+[Code →](https://github.com/rachelzh-hua/aml-concierge-deploy)
+:::
+
+::: {.project-card}
+### MI-SPACE
+NSCLC multiplex-imaging reanalysis portal (MI-SPACE) for spatial single-cell
+data.
+
+`HTML` · `Spatial` · `Vercel`
+
+[Code →](https://github.com/rachelzh-hua/mispace-portal)
+:::
+
+::: {.project-card}
+### May Lab prostate ADT portal
+Mouse prostate androgen-deprivation-therapy reanalysis for the May Lab.
+
+`HTML` · `Vercel`
+
+[Code →](https://github.com/rachelzh-hua/may-prostate-portal)
+:::
+
+::: {.project-card}
+### Aguado Lab aortic valve portal
+Aortic valve dataset reanalysis portal for the Aguado Lab.
+
+`HTML` · `Vercel`
+
+[Code →](https://github.com/rachelzh-hua/aguado-portal)
+:::
+
+::: {.project-card}
+### Ritchie Lab spleen portal
+SpatialBench spleen reanalysis portal for the Ritchie Lab.
+
+`HTML` · `Spatial` · `Vercel`
+
+[Code →](https://github.com/rachelzh-hua/ritchie-spleen-portal)
+:::
+
+::: {.project-card}
+### BrainLike benchmark portal
+Report portal for the BrainLike benchmark.
+
+`HTML` · `Vercel`
+
+[Code →](https://github.com/rachelzh-hua/brainlike-portal)
+:::
+
+:::
