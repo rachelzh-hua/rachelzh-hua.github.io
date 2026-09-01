@@ -14,9 +14,9 @@
       --bg:#0a0e14; --bg-soft:#0e131c; --panel:#111826;
       --border:#1e2a3a; --border-soft:#172230;
       --text:#f1f5f9; --muted:#94a3b8; --faint:#64748b;
-      --accent:#3b82f6; --accent-dim:#2563eb; --accent-glow:rgba(59,130,246,.16);
-      --green:#22c55e; --purple:#a855f7; --amber:#f59e0b; --cyan:#06b6d4; --red:#ef4444;
-      --header-grad:linear-gradient(95deg,#1e40af 0%,#2563eb 55%,#3b82f6 100%);
+      --accent:#8fb3f0; --accent-dim:#7098e0; --accent-glow:rgba(143,179,240,.20);
+      --green:#7fd0a8; --purple:#c4a9f2; --amber:#f2cd8a; --cyan:#8fd6e6; --red:#f2a3a6;
+      --header-grad:linear-gradient(95deg,#6d95d6 0%,#86a9e6 55%,#a7c5f5 100%);
       --header-line:rgba(255,255,255,.18);
       --font:'Inter',system-ui,-apple-system,sans-serif;
       --mono:'JetBrains Mono',ui-monospace,monospace;
@@ -25,7 +25,7 @@
       --bg:#f8fafc; --bg-soft:#ffffff; --panel:#ffffff;
       --border:#e2e8f0; --border-soft:#eef2f6;
       --text:#0f172a; --muted:#475569; --faint:#94a3b8;
-      --accent:#2563eb; --accent-dim:#1d4ed8; --accent-glow:rgba(37,99,235,.10);
+      --accent:#5f86dd; --accent-dim:#4f76d0; --accent-glow:rgba(95,134,221,.12);
     }
     * { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -449,7 +449,7 @@
     });
   })();
 
-  /* ============ live single-cell UMAP demo ============ */
+  /* ============ live single-cell UMAP demo (continuously animated) ============ */
   (function () {
     var canvas = document.getElementById('umap');
     var ctx = canvas.getContext('2d');
@@ -465,14 +465,13 @@
     function gauss(){ var u=0,v=0; while(!u)u=rnd(); while(!v)v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
 
     var CLUSTERS = [
-      { name:'Microglia',      color:'#3b82f6' },
-      { name:'Astrocytes',     color:'#22c55e' },
-      { name:'Neurons',        color:'#a855f7' },
-      { name:'Oligodendro.',   color:'#f59e0b' },
-      { name:'Endothelial',    color:'#06b6d4' },
-      { name:'T cells',        color:'#ef4444' }
+      { name:'Microglia',    color:'#8fb3f0' },
+      { name:'Astrocytes',   color:'#8fd6b0' },
+      { name:'Neurons',      color:'#c4a9f2' },
+      { name:'Oligodendro.', color:'#f2cd8a' },
+      { name:'Endothelial',  color:'#8fd6e6' },
+      { name:'T cells',      color:'#f2a3a6' }
     ];
-    // marker genes -> which clusters express them
     var GENES = [
       { name:'AIF1',   markers:[0] },
       { name:'GFAP',   markers:[1] },
@@ -480,90 +479,90 @@
       { name:'MBP',    markers:[3] },
       { name:'PECAM1', markers:[4] },
       { name:'CD3D',   markers:[5] },
-      { name:'MKI67',  markers:[0,5] }  // proliferation, shared
+      { name:'MKI67',  markers:[0,5] }
     ];
 
-    var N = 1700;
-    var pts = [];
+    var N = 1700, pts = [];
     for (var k = 0; k < CLUSTERS.length; k++) {
       var ang = (k / CLUSTERS.length) * Math.PI * 2;
       var cx = Math.cos(ang) * 0.62, cy = Math.sin(ang) * 0.62;
       var n = Math.round(N / CLUSTERS.length);
       for (var i = 0; i < n; i++) {
-        pts.push({ x: cx + gauss() * 0.14, y: cy + gauss() * 0.14, cl: k });
+        pts.push({ x: cx + gauss()*0.14, y: cy + gauss()*0.14, cl: k,
+                   ph: rnd()*6.283, sp: 0.6 + rnd()*1.1, am: 0.014 + rnd()*0.022 });
       }
     }
-    // per-gene expression per point
     pts.forEach(function (p) {
       p.expr = GENES.map(function (g) {
-        var base = 0.06 * rnd();
-        var hit = g.markers.indexOf(p.cl) >= 0;
-        return hit ? Math.min(1, 0.55 + 0.45 * rnd()) : base + 0.05 * rnd();
+        var base = 0.06*rnd(), hit = g.markers.indexOf(p.cl) >= 0;
+        return hit ? Math.min(1, 0.55 + 0.45*rnd()) : base + 0.05*rnd();
       });
     });
     cellCountEl.textContent = pts.length.toLocaleString() + ' cells';
 
-    // viridis interpolation
     var VIR = [[68,1,84],[59,82,139],[33,145,140],[94,201,98],[253,231,37]];
     function viridis(t){ t=Math.max(0,Math.min(1,t)); var s=t*(VIR.length-1); var i=Math.floor(s); var f=s-i; if(i>=VIR.length-1){i=VIR.length-2;f=1;} var a=VIR[i],b=VIR[i+1]; return 'rgb('+Math.round(a[0]+(b[0]-a[0])*f)+','+Math.round(a[1]+(b[1]-a[1])*f)+','+Math.round(a[2]+(b[2]-a[2])*f)+')'; }
 
-    var mode = -1; // -1 = cluster coloring, else gene index
-    var W = 0, H = 0, dpr = 1, pad = 18;
+    var mode = -1, autoCycle = true, W=0, H=0, dpr=1, pad=18;
     function resize(){
       var r = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio||1, 2);
       W = r.width; H = r.height;
-      canvas.width = W * dpr; canvas.height = H * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      draw();
+      canvas.width = W*dpr; canvas.height = H*dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
     }
-    function sx(x){ return pad + (x + 1.1) / 2.2 * (W - 2 * pad); }
-    function sy(y){ return pad + (y + 1.1) / 2.2 * (H - 2 * pad); }
+    function sx(x){ return pad + (x+1.1)/2.2*(W-2*pad); }
+    function sy(y){ return pad + (y+1.1)/2.2*(H-2*pad); }
+    function colorFor(p){ return mode<0 ? CLUSTERS[p.cl].color : viridis(p.expr[mode]); }
 
-    function colorFor(p){ return mode < 0 ? CLUSTERS[p.cl].color : viridis(p.expr[mode]); }
-
-    var intro = 0;
-    function draw(){
-      ctx.clearRect(0, 0, W, H);
-      var rad = Math.max(1.6, Math.min(2.6, W / 170));
-      for (var i = 0; i < pts.length; i++) {
+    // continuous animation loop: every cell gently drifts, so the cloud is always alive
+    var t0 = null;
+    function frame(now){
+      if (t0 === null) t0 = now;
+      var t = (now - t0)/1000;
+      var intro = Math.min(1, t/0.7);
+      var rad = Math.max(1.6, Math.min(2.6, W/170));
+      ctx.clearRect(0,0,W,H);
+      for (var i=0;i<pts.length;i++){
         var p = pts[i];
-        p._sx = sx(p.x); p._sy = sy(p.y);
-        ctx.globalAlpha = 0.8 * intro;
+        var dx = Math.sin(t*0.7*p.sp + p.ph) * p.am;
+        var dy = Math.cos(t*0.6*p.sp + p.ph*1.3) * p.am;
+        p._sx = sx(p.x + dx); p._sy = sy(p.y + dy);
+        ctx.globalAlpha = 0.82*intro;
         ctx.fillStyle = colorFor(p);
-        ctx.beginPath();
-        ctx.arc(p._sx, p._sy, rad, 0, 6.283);
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p._sx, p._sy, rad, 0, 6.283); ctx.fill();
       }
       ctx.globalAlpha = 1;
+      requestAnimationFrame(frame);
     }
-    // intro fade-in
-    function animate(){ intro = Math.min(1, intro + 0.06); draw(); if (intro < 1) requestAnimationFrame(animate); }
 
-    // gene buttons
     var genesEl = document.getElementById('genes');
-    function setMode(m, btn){
-      mode = m;
-      genesEl.querySelectorAll('.gene').forEach(function(x){ x.classList.remove('active'); });
-      if (btn) btn.classList.add('active');
-      var showBar = m >= 0;
+    function updateLabel(){
+      var showBar = mode >= 0;
       colorbar.classList.toggle('hidden', !showBar);
       cbLabels.classList.toggle('hidden', !showBar);
       colorModeEl.innerHTML = showBar
-        ? 'coloring&nbsp;·&nbsp;<b style="color:var(--text)">' + GENES[m].name + '</b> expression'
+        ? 'coloring&nbsp;·&nbsp;<b style="color:var(--text)">'+GENES[mode].name+'</b> expression'
         : 'coloring&nbsp;·&nbsp;cell type clusters';
-      draw();
     }
+    var buttons = [];
+    function highlight(){ buttons.forEach(function(b,idx){ b.classList.toggle('active', (idx===0 && mode<0) || (idx-1===mode)); }); }
+    function setMode(m, userClick){ mode = m; if (userClick) autoCycle = false; highlight(); updateLabel(); }
+
     var clusterBtn = document.createElement('button');
     clusterBtn.className = 'gene active'; clusterBtn.textContent = 'clusters';
-    clusterBtn.addEventListener('click', function(){ setMode(-1, null); clusterBtn.classList.add('active'); });
-    genesEl.appendChild(clusterBtn);
+    clusterBtn.addEventListener('click', function(){ setMode(-1, true); });
+    genesEl.appendChild(clusterBtn); buttons.push(clusterBtn);
     GENES.forEach(function (g, gi) {
       var b = document.createElement('button');
       b.className = 'gene'; b.textContent = g.name;
-      b.addEventListener('click', function(){ clusterBtn.classList.remove('active'); setMode(gi, b); });
-      genesEl.appendChild(b);
+      b.addEventListener('click', function(){ setMode(gi, true); });
+      genesEl.appendChild(b); buttons.push(b);
     });
+
+    // auto-cycle the coloring so the demo keeps changing until the visitor takes over
+    var order = [-1,0,1,2,3,4,5,6], oi = 0;
+    setInterval(function(){ if (!autoCycle) return; oi = (oi+1)%order.length; mode = order[oi]; highlight(); updateLabel(); }, 2200);
 
     // hover tooltip
     var raf = false;
@@ -572,23 +571,17 @@
       requestAnimationFrame(function () {
         raf = false;
         var r = canvas.getBoundingClientRect();
-        var mx = e.clientX - r.left, my = e.clientY - r.top, best = null, bd = 64;
-        for (var i = 0; i < pts.length; i++) {
-          var dx = pts[i]._sx - mx, dy = pts[i]._sy - my, d = dx*dx + dy*dy;
-          if (d < bd) { bd = d; best = pts[i]; }
-        }
-        if (best) {
-          tip.style.left = best._sx + 'px'; tip.style.top = best._sy + 'px';
-          tip.innerHTML = CLUSTERS[best.cl].name + (mode >= 0 ? ' · ' + GENES[mode].name + ' ' + best.expr[mode].toFixed(2) : '');
-          tip.style.opacity = 1;
-        } else { tip.style.opacity = 0; }
+        var mx = e.clientX-r.left, my = e.clientY-r.top, best=null, bd=64;
+        for (var i=0;i<pts.length;i++){ var dx=pts[i]._sx-mx, dy=pts[i]._sy-my, d=dx*dx+dy*dy; if(d<bd){bd=d;best=pts[i];} }
+        if (best){ tip.style.left=best._sx+'px'; tip.style.top=best._sy+'px'; tip.innerHTML = CLUSTERS[best.cl].name + (mode>=0 ? ' · '+GENES[mode].name+' '+best.expr[mode].toFixed(2) : ''); tip.style.opacity=1; }
+        else tip.style.opacity=0;
       });
     });
     canvas.addEventListener('mouseleave', function(){ tip.style.opacity = 0; });
 
     if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
     window.addEventListener('resize', resize);
-    resize(); animate();
+    resize(); updateLabel(); requestAnimationFrame(frame);
   })();
 
   document.getElementById('yr').textContent = '2026';
