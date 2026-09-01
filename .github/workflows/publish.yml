@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -23,16 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Render
-        run: quarto render
-
-      - name: Upload artifact
+      - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: .           # serve the repo root (index.html)
 
       - name: Deploy to GitHub Pages
         id: deployment

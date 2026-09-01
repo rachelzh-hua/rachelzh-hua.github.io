@@ -1,51 +1,33 @@
 # Rachel Hua — portfolio site
 
-A [Quarto](https://quarto.org) website scaffolded with your real GitHub projects.
+A single-page portfolio, styled to match my data-portal design system
+(zinc-dark, purple accent, Inter + JetBrains Mono). Live at
+**https://rachelzh-hua.github.io**.
 
 ## Files
 
 | File | What it is |
 |------|-----------|
-| `_quarto.yml` | Site config: title, navbar, theme |
-| `index.qmd` | Home / about page |
-| `projects.qmd` | Project grid (genomics pipelines + reanalysis portals) |
-| `cv.qmd` | CV page (placeholder — fill in) |
-| `styles.scss` / `styles.css` | Theme colors + project-card styling |
-| `profile.jpg` | **Add** a square headshot (or remove the `image:` line in `index.qmd`) |
+| `index.html` | The entire site — self-contained, no build step, no dependencies |
+| `.github/workflows/publish.yml` | Deploys the repo to GitHub Pages on every push to `main` |
+| `.nojekyll` | Tells GitHub Pages to serve files as-is (no Jekyll) |
+
+## Edit it
+
+Everything lives in `index.html` — content, styles, and the theme toggle.
+Just edit and push; the site redeploys automatically in ~30s.
+
+Common tweaks:
+
+- **Add a headshot** — drop an image in the repo and add an `<img>` in the hero.
+- **Publications / CV** — add a `<section id="cv">` (copy an existing section as a template) or link a `cv.pdf`.
+- **Social links** — the header and footer hold GitHub + email; add Scholar / ORCID / LinkedIn the same way.
 
 ## Preview locally
 
-1. Install Quarto: <https://quarto.org/docs/get-started/>
-2. From this folder:
+Just open `index.html` in a browser — no server needed.
 
-   ```bash
-   quarto preview        # live-reloading local preview
-   quarto render         # build static site into _site/
-   ```
+## Deploy
 
-## Publish to GitHub Pages (free)
-
-```bash
-git init
-git add .
-git commit -m "Initial portfolio site"
-git branch -M main
-git remote add origin https://github.com/rachelzh-hua/rachelzh-hua.github.io.git
-git push -u origin main
-```
-
-Then either:
-
-- **Easiest:** run `quarto publish gh-pages` (handles the build + branch), or
-- In the repo Settings → Pages, set the source and let Quarto's
-  [GitHub Pages guide](https://quarto.org/docs/publishing/github-pages.html) do the rest.
-
-Naming the repo `rachelzh-hua.github.io` makes it your root user site at
-`https://rachelzh-hua.github.io`.
-
-## To do
-
-- [ ] Add `profile.jpg`
-- [ ] Fill in `cv.qmd` (education, publications) or link a `cv.pdf`
-- [ ] Uncomment Scholar / ORCID / LinkedIn links in `index.qmd`
-- [ ] Update `site-url` in `_quarto.yml` if you use a custom domain
+Handled automatically by GitHub Actions. To publish manually you can also run
+any static host (Netlify, Vercel) pointed at this repo.
