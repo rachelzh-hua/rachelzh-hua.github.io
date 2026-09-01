@@ -8,196 +8,157 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23a855f7'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' text-anchor='middle' fill='white'%3ERH%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233b82f6'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' text-anchor='middle' fill='white'%3ERH%3C/text%3E%3C/svg%3E">
   <style>
     :root {
-      --bg:#09090b; --bg-soft:#0e0e11; --panel:#121216;
-      --border:#27272a; --border-soft:#1c1c20;
-      --text:#fafafa; --muted:#a1a1aa; --faint:#71717a;
-      --purple:#a855f7; --purple-dim:#7c3aed; --purple-glow:rgba(168,85,247,.16);
-      --green:#22c55e; --blue:#3b82f6; --red:#ef4444; --amber:#f59e0b; --cyan:#06b6d4;
-      --header-grad:linear-gradient(95deg,#3d34cf 0%,#5a34d1 52%,#6d28d9 100%);
-      --header-line:rgba(255,255,255,.16);
+      --bg:#0a0e14; --bg-soft:#0e131c; --panel:#111826;
+      --border:#1e2a3a; --border-soft:#172230;
+      --text:#f1f5f9; --muted:#94a3b8; --faint:#64748b;
+      --accent:#3b82f6; --accent-dim:#2563eb; --accent-glow:rgba(59,130,246,.16);
+      --green:#22c55e; --purple:#a855f7; --amber:#f59e0b; --cyan:#06b6d4; --red:#ef4444;
+      --header-grad:linear-gradient(95deg,#1e40af 0%,#2563eb 55%,#3b82f6 100%);
+      --header-line:rgba(255,255,255,.18);
       --font:'Inter',system-ui,-apple-system,sans-serif;
       --mono:'JetBrains Mono',ui-monospace,monospace;
     }
     :root[data-theme="light"] {
       --bg:#f8fafc; --bg-soft:#ffffff; --panel:#ffffff;
       --border:#e2e8f0; --border-soft:#eef2f6;
-      --text:#1e293b; --muted:#475569; --faint:#94a3b8;
-      --purple:#7c3aed; --purple-dim:#6d28d9; --purple-glow:rgba(124,58,237,.10);
-      --green:#16a34a; --blue:#2563eb; --red:#dc2626; --amber:#d97706; --cyan:#0891b2;
-      --header-line:rgba(255,255,255,.22);
+      --text:#0f172a; --muted:#475569; --faint:#94a3b8;
+      --accent:#2563eb; --accent-dim:#1d4ed8; --accent-glow:rgba(37,99,235,.10);
     }
-
     * { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
-    body {
-      font-family:var(--font); background:var(--bg); color:var(--text);
-      line-height:1.6; -webkit-font-smoothing:antialiased;
-      overflow-x:hidden;
-    }
+    body { font-family:var(--font); background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
     a { color:inherit; text-decoration:none; }
-    ::selection { background:var(--purple-glow); }
+    ::selection { background:var(--accent-glow); }
 
-    /* ---------- header ---------- */
-    header {
-      position:sticky; top:0; z-index:50;
-      background:var(--header-grad);
-      border-bottom:1px solid var(--header-line);
-      backdrop-filter:saturate(140%);
-    }
-    .nav {
-      max-width:1080px; margin:0 auto; padding:0 24px;
-      height:60px; display:flex; align-items:center; gap:20px;
-    }
+    /* header */
+    header { position:sticky; top:0; z-index:50; background:var(--header-grad); border-bottom:1px solid var(--header-line); }
+    .nav { max-width:1120px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; gap:20px; }
     .brand { display:flex; align-items:center; gap:10px; font-weight:700; color:#fff; letter-spacing:-.01em; }
-    .brand .mark {
-      width:30px; height:30px; border-radius:8px; display:grid; place-items:center;
-      background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22);
-      font-family:var(--mono); font-size:13px; font-weight:700; color:#fff;
-    }
+    .brand .mark { width:30px; height:30px; border-radius:8px; display:grid; place-items:center; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.24); font-family:var(--mono); font-size:13px; font-weight:700; color:#fff; }
     .nav-links { margin-left:auto; display:flex; align-items:center; gap:6px; }
-    .nav-links a {
-      color:rgba(255,255,255,.86); font-size:14px; font-weight:500;
-      padding:7px 12px; border-radius:8px; transition:background .15s, color .15s;
-    }
-    .nav-links a:hover { background:rgba(255,255,255,.14); color:#fff; }
-    .icon-btn {
-      display:grid; place-items:center; width:34px; height:34px; border-radius:8px;
-      background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18);
-      color:#fff; cursor:pointer; transition:background .15s;
-    }
-    .icon-btn:hover { background:rgba(255,255,255,.2); }
+    .nav-links a { color:rgba(255,255,255,.88); font-size:14px; font-weight:500; padding:7px 12px; border-radius:8px; transition:background .15s; }
+    .nav-links a:hover { background:rgba(255,255,255,.16); color:#fff; }
+    .icon-btn { display:grid; place-items:center; width:34px; height:34px; border-radius:8px; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.20); color:#fff; cursor:pointer; transition:background .15s; }
+    .icon-btn:hover { background:rgba(255,255,255,.22); }
     .icon-btn svg { width:16px; height:16px; }
 
-    /* ---------- layout ---------- */
-    main { max-width:1080px; margin:0 auto; padding:0 24px; }
-    section { padding:76px 0; border-bottom:1px solid var(--border-soft); }
+    main { max-width:1120px; margin:0 auto; padding:0 24px; }
+    section { padding:74px 0; border-bottom:1px solid var(--border-soft); }
     section:last-of-type { border-bottom:none; }
-    .eyebrow {
-      font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
-      color:var(--purple); display:inline-flex; align-items:center; gap:8px;
-    }
-    .eyebrow::before { content:""; width:22px; height:1px; background:var(--purple); opacity:.6; }
+    .eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); display:inline-flex; align-items:center; gap:8px; }
+    .eyebrow::before { content:""; width:22px; height:1px; background:var(--accent); opacity:.6; }
     h2.title { font-size:30px; font-weight:800; letter-spacing:-.02em; margin:14px 0 10px; }
-    .lead { color:var(--muted); max-width:640px; }
+    .lead { color:var(--muted); max-width:660px; }
 
-    /* ---------- hero ---------- */
-    .hero {
-      position:relative; padding:112px 0 92px; border-bottom:1px solid var(--border-soft);
-      overflow:hidden;
-    }
-    .hero::before {
-      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-      background:
-        radial-gradient(560px 280px at 12% -8%, var(--purple-glow), transparent 70%),
-        radial-gradient(480px 260px at 92% 6%, rgba(59,130,246,.10), transparent 70%);
-    }
-    .hero-inner { position:relative; z-index:1; }
-    .hero h1 {
-      font-size:clamp(38px, 6vw, 62px); font-weight:800; letter-spacing:-.03em;
-      line-height:1.04; margin:20px 0 18px;
-    }
-    .hero h1 .accent {
-      background:linear-gradient(92deg,var(--purple),var(--blue));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-    }
-    .hero .lead { font-size:18px; max-width:600px; }
-    .cta { margin-top:32px; display:flex; flex-wrap:wrap; gap:12px; }
-    .btn {
-      display:inline-flex; align-items:center; gap:9px; font-weight:600; font-size:14.5px;
-      padding:11px 20px; border-radius:10px; cursor:pointer; transition:transform .12s, box-shadow .2s, background .15s;
-      border:1px solid transparent;
-    }
-    .btn-primary { background:var(--purple); color:#fff; box-shadow:0 6px 22px -8px var(--purple); }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 28px -8px var(--purple); }
+    /* hero */
+    .hero { position:relative; padding:64px 0 72px; border-bottom:1px solid var(--border-soft); overflow:hidden; }
+    .hero::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; background:radial-gradient(560px 300px at 8% -10%, var(--accent-glow), transparent 70%), radial-gradient(480px 280px at 96% 4%, rgba(6,182,212,.10), transparent 70%); }
+    .hero-inner { position:relative; z-index:1; display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center; }
+    .hero h1 { font-size:clamp(34px,4.6vw,52px); font-weight:800; letter-spacing:-.03em; line-height:1.05; margin:18px 0 16px; }
+    .hero h1 .accent { background:linear-gradient(92deg,var(--accent),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero .lead { font-size:17px; max-width:520px; }
+    .cta { margin-top:28px; display:flex; flex-wrap:wrap; gap:12px; }
+    .btn { display:inline-flex; align-items:center; gap:9px; font-weight:600; font-size:14.5px; padding:11px 20px; border-radius:10px; cursor:pointer; transition:transform .12s, box-shadow .2s, background .15s, border-color .15s; border:1px solid transparent; }
+    .btn-primary { background:var(--accent); color:#fff; box-shadow:0 6px 22px -8px var(--accent); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 28px -8px var(--accent); }
     .btn-ghost { background:transparent; border-color:var(--border); color:var(--text); }
-    .btn-ghost:hover { border-color:var(--purple); color:var(--purple); transform:translateY(-2px); }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
     .btn svg { width:16px; height:16px; }
+    .stats { margin-top:34px; display:flex; flex-wrap:wrap; gap:12px; }
+    .stat { border:1px solid var(--border); background:var(--panel); border-radius:12px; padding:14px 20px; min-width:118px; }
+    .stat .num { font-family:var(--mono); font-size:24px; font-weight:500; }
+    .stat .lbl { font-size:12px; color:var(--muted); margin-top:2px; }
 
-    .stats { margin-top:52px; display:flex; flex-wrap:wrap; gap:14px; }
-    .stat {
-      border:1px solid var(--border); background:var(--panel); border-radius:12px;
-      padding:16px 22px; min-width:132px;
-    }
-    .stat .num { font-family:var(--mono); font-size:26px; font-weight:500; color:var(--text); }
-    .stat .lbl { font-size:12.5px; color:var(--muted); margin-top:3px; }
+    /* live demo card */
+    .demo { border:1px solid var(--border); background:linear-gradient(180deg,var(--panel),var(--bg-soft)); border-radius:16px; padding:16px; box-shadow:0 24px 60px -30px rgba(0,0,0,.6); }
+    .demo-top { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+    .demo-dot { width:9px; height:9px; border-radius:50%; }
+    .demo-title { font-family:var(--mono); font-size:12px; color:var(--muted); margin-left:2px; }
+    .demo-live { margin-left:auto; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--green); display:flex; align-items:center; gap:6px; }
+    .demo-live::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 0 rgba(34,197,94,.6); animation:pulse 1.8s infinite; }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)} 70%{box-shadow:0 0 0 7px rgba(34,197,94,0)} 100%{box-shadow:0 0 0 0 rgba(34,197,94,0)} }
+    .canvas-wrap { position:relative; width:100%; height:290px; border-radius:10px; overflow:hidden; background:var(--bg); border:1px solid var(--border-soft); }
+    #umap { width:100%; height:100%; display:block; cursor:crosshair; }
+    .tip { position:absolute; pointer-events:none; background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:5px 9px; font-family:var(--mono); font-size:11px; color:var(--text); opacity:0; transform:translate(-50%,-130%); transition:opacity .1s; white-space:nowrap; z-index:3; }
+    .demo-controls { margin-top:12px; }
+    .demo-label { font-size:11.5px; color:var(--faint); font-family:var(--mono); margin-bottom:7px; display:flex; justify-content:space-between; }
+    .genes { display:flex; flex-wrap:wrap; gap:6px; }
+    .gene { font-family:var(--mono); font-size:11.5px; padding:4px 9px; border-radius:7px; border:1px solid var(--border); background:var(--bg-soft); color:var(--muted); cursor:pointer; transition:all .14s; }
+    .gene:hover { border-color:var(--accent); color:var(--text); }
+    .gene.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .colorbar { height:7px; border-radius:4px; margin-top:11px; background:linear-gradient(90deg,#440154,#3b528b,#21918c,#5ec962,#fde725); position:relative; }
+    .colorbar.hidden { display:none; }
+    .cb-labels { display:flex; justify-content:space-between; font-family:var(--mono); font-size:10px; color:var(--faint); margin-top:3px; }
+    .cb-labels.hidden { display:none; }
 
-    /* ---------- about ---------- */
+    /* about */
     .about-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:44px; align-items:start; }
     .about-grid p { color:var(--muted); margin-bottom:16px; }
     .about-grid p strong { color:var(--text); font-weight:600; }
     .focus { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:22px 24px; }
     .focus h3 { font-size:13px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em; color:var(--faint); margin-bottom:14px; }
     .focus ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
-    .focus li { display:flex; gap:11px; font-size:14.5px; color:var(--text); align-items:flex-start; }
-    .focus li::before { content:""; margin-top:8px; width:6px; height:6px; border-radius:50%; background:var(--purple); flex:none; box-shadow:0 0 0 3px var(--purple-glow); }
+    .focus li { display:flex; gap:11px; font-size:14.5px; align-items:flex-start; }
+    .focus li::before { content:""; margin-top:8px; width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none; box-shadow:0 0 0 3px var(--accent-glow); }
 
-    /* ---------- projects ---------- */
-    .group-label { font-family:var(--mono); font-size:13px; color:var(--muted); margin:38px 0 18px; display:flex; align-items:center; gap:10px; }
-    .group-label:first-of-type { margin-top:26px; }
-    .group-label span.dot { width:8px; height:8px; border-radius:50%; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px; }
-    .card {
-      position:relative; border:1px solid var(--border); background:var(--panel);
-      border-radius:14px; padding:22px; display:flex; flex-direction:column;
-      transition:border-color .18s, transform .18s, box-shadow .25s; overflow:hidden;
-    }
-    .card::after {
-      content:""; position:absolute; inset:0; border-radius:14px; pointer-events:none;
-      background:radial-gradient(340px 160px at 100% 0%, var(--purple-glow), transparent 70%);
-      opacity:0; transition:opacity .25s;
-    }
-    .card:hover { transform:translateY(-4px); border-color:color-mix(in srgb, var(--purple) 55%, var(--border)); box-shadow:0 18px 40px -22px var(--purple); }
+    /* projects */
+    .filters { display:flex; flex-wrap:wrap; gap:8px; margin:24px 0 22px; }
+    .filter { font-family:var(--mono); font-size:12.5px; padding:7px 14px; border-radius:9px; border:1px solid var(--border); background:var(--panel); color:var(--muted); cursor:pointer; transition:all .15s; }
+    .filter:hover { border-color:var(--accent); color:var(--text); }
+    .filter.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .filter .n { opacity:.65; margin-left:5px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(285px,1fr)); gap:18px; }
+    .card { position:relative; border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:22px; display:flex; flex-direction:column; transition:border-color .18s, transform .18s, box-shadow .25s; overflow:hidden; }
+    .card::after { content:""; position:absolute; inset:0; border-radius:14px; pointer-events:none; background:radial-gradient(340px 160px at 100% 0%, var(--accent-glow), transparent 70%); opacity:0; transition:opacity .25s; }
+    .card:hover { transform:translateY(-4px); border-color:color-mix(in srgb, var(--accent) 55%, var(--border)); box-shadow:0 18px 40px -22px var(--accent); }
     .card:hover::after { opacity:1; }
-    .card h3 { font-size:16.5px; font-weight:700; letter-spacing:-.01em; margin-bottom:9px; position:relative; }
+    .card .cat-badge { position:absolute; top:16px; right:16px; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; border:1px solid var(--border); color:var(--faint); }
+    .card h3 { font-size:16.5px; font-weight:700; letter-spacing:-.01em; margin-bottom:9px; padding-right:70px; position:relative; }
     .card p { font-size:14px; color:var(--muted); flex:1; position:relative; }
     .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; position:relative; }
-    .tag {
-      font-family:var(--mono); font-size:11px; padding:3px 8px; border-radius:6px;
-      border:1px solid var(--border); color:var(--muted); background:var(--bg-soft);
-    }
-    .tag.p { color:var(--purple); border-color:color-mix(in srgb,var(--purple) 40%,transparent); }
+    .tag { font-family:var(--mono); font-size:11px; padding:3px 8px; border-radius:6px; border:1px solid var(--border); color:var(--muted); background:var(--bg-soft); }
+    .tag.b { color:var(--accent); border-color:color-mix(in srgb,var(--accent) 40%,transparent); }
     .tag.g { color:var(--green); border-color:color-mix(in srgb,var(--green) 40%,transparent); }
-    .tag.b { color:var(--blue); border-color:color-mix(in srgb,var(--blue) 40%,transparent); }
+    .tag.p { color:var(--purple); border-color:color-mix(in srgb,var(--purple) 40%,transparent); }
     .tag.c { color:var(--cyan); border-color:color-mix(in srgb,var(--cyan) 40%,transparent); }
     .tag.a { color:var(--amber); border-color:color-mix(in srgb,var(--amber) 40%,transparent); }
-    .card-link {
-      margin-top:16px; font-size:13px; font-weight:600; color:var(--purple);
-      display:inline-flex; align-items:center; gap:6px; position:relative;
-      transition:gap .15s;
-    }
+    .card-link { margin-top:16px; font-size:13px; font-weight:600; color:var(--accent); display:inline-flex; align-items:center; gap:6px; position:relative; transition:gap .15s; }
     .card:hover .card-link { gap:10px; }
 
-    /* ---------- toolbox ---------- */
-    .chips { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; }
-    .chip {
-      font-family:var(--mono); font-size:13px; color:var(--text); background:var(--panel);
-      border:1px solid var(--border); border-radius:8px; padding:7px 13px;
-      transition:border-color .15s, color .15s;
-    }
-    .chip:hover { border-color:var(--purple); color:var(--purple); }
+    /* capabilities / toolbox */
+    .cap-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; margin-top:26px; }
+    .cap { border:1px solid var(--border); background:var(--panel); border-radius:13px; overflow:hidden; transition:border-color .18s; }
+    .cap.open { border-color:color-mix(in srgb,var(--accent) 50%,var(--border)); }
+    .cap-head { display:flex; align-items:center; gap:13px; padding:17px 20px; cursor:pointer; user-select:none; }
+    .cap-ico { width:36px; height:36px; border-radius:9px; display:grid; place-items:center; flex:none; background:var(--accent-glow); color:var(--accent); }
+    .cap-ico svg { width:19px; height:19px; }
+    .cap-titles { flex:1; }
+    .cap-titles .t { font-weight:700; font-size:15px; letter-spacing:-.01em; }
+    .cap-titles .s { font-size:12px; color:var(--faint); font-family:var(--mono); margin-top:1px; }
+    .cap-chev { color:var(--faint); transition:transform .22s; }
+    .cap.open .cap-chev { transform:rotate(180deg); color:var(--accent); }
+    .cap-body { max-height:0; overflow:hidden; transition:max-height .28s ease; }
+    .cap-body-inner { padding:0 20px 18px; }
+    .cap-body-inner .tools { display:flex; flex-wrap:wrap; gap:6px; }
+    .cap-body-inner .tool { font-family:var(--mono); font-size:11.5px; padding:4px 9px; border-radius:6px; border:1px solid var(--border); background:var(--bg-soft); color:var(--text); }
+    .cap-body-inner .desc { font-size:13px; color:var(--muted); margin-bottom:13px; }
 
-    /* ---------- contact ---------- */
-    .contact-card {
-      border:1px solid var(--border); border-radius:18px; padding:44px;
-      background:
-        radial-gradient(500px 220px at 100% 0%, var(--purple-glow), transparent 70%),
-        var(--panel);
-      text-align:center;
-    }
+    /* contact */
+    .contact-card { border:1px solid var(--border); border-radius:18px; padding:44px; background:radial-gradient(500px 240px at 100% 0%, var(--accent-glow), transparent 70%), var(--panel); text-align:center; }
     .contact-card h2 { font-size:28px; font-weight:800; letter-spacing:-.02em; }
     .contact-card p { color:var(--muted); margin:12px auto 26px; max-width:440px; }
-
     footer { padding:34px 0 46px; text-align:center; color:var(--faint); font-size:13px; }
     footer a { color:var(--muted); }
-    footer a:hover { color:var(--purple); }
+    footer a:hover { color:var(--accent); }
 
-    @media (max-width:760px) {
+    @media (max-width:860px) {
+      .hero-inner { grid-template-columns:1fr; gap:34px; }
       .about-grid { grid-template-columns:1fr; gap:28px; }
       .nav-links a.hide-sm { display:none; }
-      section { padding:60px 0; }
+      section { padding:56px 0; }
     }
   </style>
 </head>
@@ -208,7 +169,7 @@
       <div class="nav-links">
         <a class="hide-sm" href="#about">About</a>
         <a href="#projects">Projects</a>
-        <a class="hide-sm" href="#toolbox">Toolbox</a>
+        <a class="hide-sm" href="#capabilities">What I do</a>
         <a href="#contact">Contact</a>
         <button class="icon-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
           <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -223,22 +184,42 @@
   <div id="top"></div>
   <section class="hero">
     <main class="hero-inner">
-      <span class="eyebrow">Bioinformatician · University of Southern California</span>
-      <h1>Reproducible genomics,<br><span class="accent">built for biologists.</span></h1>
-      <p class="lead">I turn raw sequencing and imaging data into reproducible pipelines and interactive web portals — so wet-lab collaborators can explore their results without touching the command line.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="#projects">View projects
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a class="btn btn-ghost" href="https://github.com/rachelzh-hua" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.28 5.69.42.36.79 1.06.79 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-          GitHub
-        </a>
+      <div>
+        <span class="eyebrow">Bioinformatician · University of Southern California</span>
+        <h1>Reproducible genomics,<br><span class="accent">built for biologists.</span></h1>
+        <p class="lead">I turn raw sequencing and imaging data into reproducible pipelines and interactive web portals — so wet-lab collaborators can explore their results without touching the command line.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#projects">View projects
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#capabilities">What I can do</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="num">9</div><div class="lbl">public repos</div></div>
+          <div class="stat"><div class="num">7</div><div class="lbl">data portals</div></div>
+          <div class="stat"><div class="num">3</div><div class="lbl">omics modalities</div></div>
+        </div>
       </div>
-      <div class="stats">
-        <div class="stat"><div class="num">9</div><div class="lbl">public repositories</div></div>
-        <div class="stat"><div class="num">7</div><div class="lbl">reanalysis portals</div></div>
-        <div class="stat"><div class="num">22</div><div class="lbl">step DNM pipeline</div></div>
+
+      <!-- LIVE DEMO -->
+      <div class="demo">
+        <div class="demo-top">
+          <span class="demo-dot" style="background:#ef4444"></span>
+          <span class="demo-dot" style="background:#f59e0b"></span>
+          <span class="demo-dot" style="background:#22c55e"></span>
+          <span class="demo-title">single-cell-explorer.py</span>
+          <span class="demo-live">LIVE</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="umap"></canvas>
+          <div class="tip" id="tip"></div>
+        </div>
+        <div class="demo-controls">
+          <div class="demo-label"><span id="colorMode">coloring&nbsp;·&nbsp;cell type clusters</span><span id="cellCount"></span></div>
+          <div class="genes" id="genes"></div>
+          <div class="colorbar hidden" id="colorbar"></div>
+          <div class="cb-labels hidden" id="cbLabels"><span>low</span><span>expression</span><span>high</span></div>
+        </div>
       </div>
     </main>
   </section>
@@ -268,63 +249,77 @@
     <section id="projects">
       <span class="eyebrow">Projects</span>
       <h2 class="title">Selected work</h2>
-      <p class="lead">Genomics pipelines plus a suite of lab-specific reanalysis portals. Portals are password-gated deployments — reach out for access.</p>
-
-      <div class="group-label"><span class="dot" style="background:var(--green)"></span> Genomics pipelines</div>
-      <div class="grid">
-        <div class="card">
+      <p class="lead">Filter by data modality. Portals are password-gated deployments — reach out for access.</p>
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="all">All <span class="n">9</span></button>
+        <button class="filter" data-filter="rna">RNA-seq <span class="n">3</span></button>
+        <button class="filter" data-filter="dna">DNA / Popgen <span class="n">2</span></button>
+        <button class="filter" data-filter="spatial">Spatial &amp; Imaging <span class="n">3</span></button>
+        <button class="filter" data-filter="bench">Benchmarks <span class="n">1</span></button>
+      </div>
+      <div class="grid" id="projGrid">
+        <!-- DNA -->
+        <div class="card" data-cat="dna">
+          <span class="cat-badge">DNA</span>
           <h3>De novo mutation rate in Pacific oyster</h3>
-          <p><em>Crassostrea gigas</em> trio sequencing to detect germline de novo mutations across family groups. A 22-step workflow: BWA alignment → GATK4 HaplotypeCaller → joint genotyping → quality filtering → trio-based DNM calling → SnpEff annotation → repeat-region exclusion.</p>
-          <div class="tags"><span class="tag g">GATK3/4</span><span class="tag">BWA</span><span class="tag">SAMtools</span><span class="tag">Picard</span><span class="tag">SnpEff</span><span class="tag">RepeatMasker</span></div>
+          <p><em>Crassostrea gigas</em> trio sequencing to detect germline de novo mutations. A 22-step workflow: BWA → GATK4 HaplotypeCaller → joint genotyping → filtering → trio DNM calling → SnpEff → repeat-region exclusion.</p>
+          <div class="tags"><span class="tag g">GATK3/4</span><span class="tag">BWA</span><span class="tag">SAMtools</span><span class="tag">SnpEff</span><span class="tag">RepeatMasker</span></div>
           <a class="card-link" href="https://github.com/rachelzh-hua/oyster_mutation" target="_blank" rel="noopener">View code →</a>
         </div>
-        <div class="card">
+        <div class="card" data-cat="dna">
+          <span class="cat-badge">DNA</span>
           <h3>Mussel larvae genomics</h3>
           <p>Population-genomics analysis of mussel larvae, with data processing and visualization in R.</p>
           <div class="tags"><span class="tag b">R</span><span class="tag">Population genetics</span></div>
           <a class="card-link" href="https://github.com/rachelzh-hua/mussel_larvae" target="_blank" rel="noopener">View code →</a>
         </div>
-      </div>
-
-      <div class="group-label"><span class="dot" style="background:var(--purple)"></span> Reanalysis &amp; data portals</div>
-      <div class="grid">
-        <div class="card">
+        <!-- RNA -->
+        <div class="card" data-cat="rna">
+          <span class="cat-badge">RNA</span>
           <h3>AD microglia RNA-seq portal</h3>
           <p>Reanalysis of <strong>GSE332551</strong> — Alzheimer's disease iPSC-derived microglia. An interactive expression browser deployed on Vercel.</p>
-          <div class="tags"><span class="tag p">Python</span><span class="tag">RNA-seq</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag b">Python</span><span class="tag">RNA-seq</span><span class="tag c">Vercel</span></div>
           <a class="card-link" href="https://github.com/rachelzh-hua/ad-microglia-rnaseq-portal" target="_blank" rel="noopener">View code →</a>
         </div>
-        <div class="card">
-          <h3>Aguado Lab aortic valve portal</h3>
-          <p>Single-cell / spatial reanalysis portal for the Aguado Lab's aortic valve dataset, with a Vitessce-powered viewer.</p>
-          <div class="tags"><span class="tag p">Spatial</span><span class="tag">Vitessce</span><span class="tag c">Vercel</span></div>
-          <a class="card-link" href="https://github.com/rachelzh-hua/aguado-portal" target="_blank" rel="noopener">View code →</a>
+        <div class="card" data-cat="rna">
+          <span class="cat-badge">RNA</span>
+          <h3>May Lab prostate ADT portal</h3>
+          <p>Mouse prostate androgen-deprivation-therapy transcriptomics reanalysis portal built for the May Lab.</p>
+          <div class="tags"><span class="tag b">Transcriptomics</span><span class="tag">Mouse</span><span class="tag c">Vercel</span></div>
+          <a class="card-link" href="https://github.com/rachelzh-hua/may-prostate-portal" target="_blank" rel="noopener">View code →</a>
         </div>
-        <div class="card">
-          <h3>MI-SPACE</h3>
-          <p>NSCLC multiplex-imaging reanalysis portal (MI-SPACE) for exploring spatial single-cell structure in lung tumor samples.</p>
-          <div class="tags"><span class="tag p">Spatial</span><span class="tag">Multiplex imaging</span><span class="tag c">Vercel</span></div>
-          <a class="card-link" href="https://github.com/rachelzh-hua/mispace-portal" target="_blank" rel="noopener">View code →</a>
-        </div>
-        <div class="card">
+        <div class="card" data-cat="rna">
+          <span class="cat-badge">RNA</span>
           <h3>AML Citation Concierge</h3>
           <p>Spermidine reanalysis portal for acute myeloid leukemia, with a citation-aware concierge interface over the results.</p>
           <div class="tags"><span class="tag a">AML</span><span class="tag">Reanalysis</span><span class="tag c">Vercel</span></div>
           <a class="card-link" href="https://github.com/rachelzh-hua/aml-concierge-deploy" target="_blank" rel="noopener">View code →</a>
         </div>
-        <div class="card">
-          <h3>May Lab prostate ADT portal</h3>
-          <p>Mouse prostate androgen-deprivation-therapy reanalysis portal built for the May Lab.</p>
-          <div class="tags"><span class="tag a">Prostate ADT</span><span class="tag">Mouse</span><span class="tag c">Vercel</span></div>
-          <a class="card-link" href="https://github.com/rachelzh-hua/may-prostate-portal" target="_blank" rel="noopener">View code →</a>
+        <!-- SPATIAL -->
+        <div class="card" data-cat="spatial">
+          <span class="cat-badge">Spatial</span>
+          <h3>Aguado Lab aortic valve portal</h3>
+          <p>Single-cell / spatial reanalysis portal for the Aguado Lab's aortic valve dataset, with a Vitessce-powered viewer.</p>
+          <div class="tags"><span class="tag p">Spatial</span><span class="tag">Vitessce</span><span class="tag c">Vercel</span></div>
+          <a class="card-link" href="https://github.com/rachelzh-hua/aguado-portal" target="_blank" rel="noopener">View code →</a>
         </div>
-        <div class="card">
+        <div class="card" data-cat="spatial">
+          <span class="cat-badge">Spatial</span>
+          <h3>MI-SPACE</h3>
+          <p>NSCLC multiplex-imaging reanalysis portal (MI-SPACE) for exploring spatial single-cell structure in lung tumor samples.</p>
+          <div class="tags"><span class="tag p">Multiplex imaging</span><span class="tag">NSCLC</span><span class="tag c">Vercel</span></div>
+          <a class="card-link" href="https://github.com/rachelzh-hua/mispace-portal" target="_blank" rel="noopener">View code →</a>
+        </div>
+        <div class="card" data-cat="spatial">
+          <span class="cat-badge">Spatial</span>
           <h3>Ritchie Lab spleen portal</h3>
           <p>SpatialBench spleen reanalysis portal for the Ritchie Lab, benchmarking spatial methods on spleen tissue.</p>
           <div class="tags"><span class="tag p">Spatial</span><span class="tag">SpatialBench</span><span class="tag c">Vercel</span></div>
           <a class="card-link" href="https://github.com/rachelzh-hua/ritchie-spleen-portal" target="_blank" rel="noopener">View code →</a>
         </div>
-        <div class="card">
+        <!-- BENCH -->
+        <div class="card" data-cat="bench">
+          <span class="cat-badge">Bench</span>
           <h3>BrainLike benchmark portal</h3>
           <p>Report portal presenting results from the BrainLike benchmark.</p>
           <div class="tags"><span class="tag b">Benchmark</span><span class="tag c">Vercel</span></div>
@@ -333,17 +328,11 @@
       </div>
     </section>
 
-    <section id="toolbox">
-      <span class="eyebrow">Toolbox</span>
-      <h2 class="title">Tools I reach for</h2>
-      <p class="lead">The stack behind the pipelines and portals.</p>
-      <div class="chips">
-        <span class="chip">GATK4</span><span class="chip">BWA</span><span class="chip">SAMtools</span>
-        <span class="chip">Picard</span><span class="chip">VCFtools</span><span class="chip">PLINK</span>
-        <span class="chip">ADMIXTURE</span><span class="chip">SnpEff</span><span class="chip">RepeatMasker</span>
-        <span class="chip">R</span><span class="chip">Python</span><span class="chip">Shell</span>
-        <span class="chip">Vitessce</span><span class="chip">Vercel</span>
-      </div>
+    <section id="capabilities">
+      <span class="eyebrow">What I can do</span>
+      <h2 class="title">Analyses &amp; the tools behind them</h2>
+      <p class="lead">Click any analysis to see the tools I use for it.</p>
+      <div class="cap-grid" id="capGrid"></div>
     </section>
 
     <section id="contact">
@@ -369,25 +358,240 @@
   </footer>
 
   <script>
-    // theme toggle — persists choice, defaults to dark
-    (function () {
-      var root = document.documentElement;
-      var saved = null;
-      try { saved = localStorage.getItem('theme'); } catch (e) {}
-      if (saved) root.setAttribute('data-theme', saved);
-      var sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
-      var moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
-      var btn = document.getElementById('themeToggle');
-      var icon = document.getElementById('themeIcon');
-      function paint() { icon.outerHTML = (root.getAttribute('data-theme') === 'light' ? moon : sun).replace('<svg', '<svg id="themeIcon"'); icon = document.getElementById('themeIcon'); }
-      paint();
-      btn.addEventListener('click', function () {
-        var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        root.setAttribute('data-theme', next);
-        try { localStorage.setItem('theme', next); } catch (e) {}
-        paint();
+  /* ============ theme toggle ============ */
+  (function () {
+    var root = document.documentElement, saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved) root.setAttribute('data-theme', saved);
+    var sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+    var moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
+    var btn = document.getElementById('themeToggle'), icon = document.getElementById('themeIcon');
+    function paint(){ var d = root.getAttribute('data-theme')==='light'; icon.outerHTML = (d?moon:sun).replace('<svg','<svg id="themeIcon"'); icon = document.getElementById('themeIcon'); }
+    paint();
+    btn.addEventListener('click', function(){ var n = root.getAttribute('data-theme')==='light'?'dark':'light'; root.setAttribute('data-theme',n); try{localStorage.setItem('theme',n);}catch(e){} paint(); });
+  })();
+
+  /* ============ project filters ============ */
+  (function () {
+    var filters = document.querySelectorAll('.filter');
+    var cards = document.querySelectorAll('#projGrid .card');
+    filters.forEach(function (f) {
+      f.addEventListener('click', function () {
+        filters.forEach(function(x){ x.classList.remove('active'); });
+        f.classList.add('active');
+        var cat = f.dataset.filter;
+        cards.forEach(function (c) {
+          var show = cat === 'all' || c.dataset.cat === cat;
+          c.style.display = show ? 'flex' : 'none';
+        });
       });
-    })();
+    });
+  })();
+
+  /* ============ capabilities accordion ============ */
+  (function () {
+    var CAPS = [
+      { t:'Bulk RNA-seq', s:'differential expression', icon:'bars',
+        d:'Quantify gene expression from bulk libraries and call differentially expressed genes between conditions.',
+        tools:['STAR','HISAT2','Salmon','kallisto','featureCounts','DESeq2','edgeR','limma-voom'] },
+      { t:'Single-cell RNA-seq', s:'clustering & annotation', icon:'cells',
+        d:'From raw counts to annotated cell types: QC, normalization, clustering, integration, and marker discovery.',
+        tools:['Cell Ranger','STARsolo','Scanpy','Seurat','Harmony','scVI','Leiden','CellTypist'] },
+      { t:'Spatial transcriptomics', s:'tissue-resolved expression', icon:'grid',
+        d:'Map expression back onto tissue: spatial domains, neighborhood analysis, and deconvolution.',
+        tools:['Space Ranger','Squidpy','Vitessce','SpatialDE','cell2location','Giotto'] },
+      { t:'Multiplex imaging', s:'single-cell spatial proteomics', icon:'scan',
+        d:'Segment cells from multiplexed images and quantify per-cell marker intensity and spatial structure.',
+        tools:['QuPath','Cellpose','StarDist','Squidpy','scimap'] },
+      { t:'DNA-seq & variant calling', s:'germline / somatic variants', icon:'dna',
+        d:'Align reads, call and annotate SNVs/indels, and produce analysis-ready, filtered VCFs.',
+        tools:['BWA','GATK4','SAMtools','Picard','bcftools','DeepVariant','SnpEff','VEP'] },
+      { t:'De novo mutation (trios)', s:'germline mutation rate', icon:'dna',
+        d:'Detect mutations present in offspring but absent in both parents, with repeat masking and rate estimation.',
+        tools:['GATK HaplotypeCaller','Joint genotyping','Trio filtering','RepeatMasker','SnpEff'] },
+      { t:'Population genomics', s:'structure & selection', icon:'tree',
+        d:'Characterize population structure, ancestry, and diversity from multi-sample variant data.',
+        tools:['PLINK','VCFtools','ANGSD','ADMIXTURE','PCA / Fst','RAxML'] },
+      { t:'Pathway & functional', s:'enrichment / GSEA', icon:'flow',
+        d:'Turn gene lists and ranked statistics into interpretable pathway- and ontology-level biology.',
+        tools:['GSEA','fgsea','GO / KEGG','gProfiler','enrichr'] },
+      { t:'Interactive data portals', s:'shareable web apps', icon:'window',
+        d:'Package any of the above into password-gated, self-serve portals your collaborators can explore.',
+        tools:['Vitessce','Zarr','Vercel','Plotly','JavaScript'] }
+    ];
+    var ICONS = {
+      bars:'<path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/>',
+      cells:'<circle cx="7" cy="8" r="2.4"/><circle cx="16" cy="7" r="2.4"/><circle cx="12" cy="15" r="2.4"/><circle cx="18" cy="16" r="2.4"/>',
+      grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+      scan:'<path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/>',
+      dna:'<path d="M8 3c0 4 8 5 8 9s-8 5-8 9M16 3c0 4-8 5-8 9s8 5 8 9M8 6h8M8 18h8M9.5 9h5M9.5 15h5"/>',
+      tree:'<path d="M12 3v6M12 9 7 13M12 9l5 4M7 13v4M17 13v4"/><circle cx="12" cy="3" r="1.6"/><circle cx="7" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/>',
+      flow:'<circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6h6a4 4 0 0 1 4 4M7 18h6a4 4 0 0 0 4-4"/>',
+      window:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/>'
+    };
+    var grid = document.getElementById('capGrid');
+    grid.innerHTML = CAPS.map(function (c) {
+      return '<div class="cap"><div class="cap-head">' +
+        '<span class="cap-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + ICONS[c.icon] + '</svg></span>' +
+        '<span class="cap-titles"><span class="t">' + c.t + '</span><span class="s">' + c.s + '</span></span>' +
+        '<svg class="cap-chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
+        '</div><div class="cap-body"><div class="cap-body-inner">' +
+        '<div class="desc">' + c.d + '</div><div class="tools">' +
+        c.tools.map(function (t) { return '<span class="tool">' + t + '</span>'; }).join('') +
+        '</div></div></div></div>';
+    }).join('');
+    grid.querySelectorAll('.cap').forEach(function (cap) {
+      var head = cap.querySelector('.cap-head'), body = cap.querySelector('.cap-body');
+      head.addEventListener('click', function () {
+        var open = cap.classList.toggle('open');
+        body.style.maxHeight = open ? body.scrollHeight + 'px' : '0px';
+      });
+    });
+  })();
+
+  /* ============ live single-cell UMAP demo ============ */
+  (function () {
+    var canvas = document.getElementById('umap');
+    var ctx = canvas.getContext('2d');
+    var tip = document.getElementById('tip');
+    var colorModeEl = document.getElementById('colorMode');
+    var cellCountEl = document.getElementById('cellCount');
+    var colorbar = document.getElementById('colorbar');
+    var cbLabels = document.getElementById('cbLabels');
+
+    // seeded PRNG so the embedding is stable across loads
+    function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+    var rnd = mulberry32(20260901);
+    function gauss(){ var u=0,v=0; while(!u)u=rnd(); while(!v)v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+
+    var CLUSTERS = [
+      { name:'Microglia',      color:'#3b82f6' },
+      { name:'Astrocytes',     color:'#22c55e' },
+      { name:'Neurons',        color:'#a855f7' },
+      { name:'Oligodendro.',   color:'#f59e0b' },
+      { name:'Endothelial',    color:'#06b6d4' },
+      { name:'T cells',        color:'#ef4444' }
+    ];
+    // marker genes -> which clusters express them
+    var GENES = [
+      { name:'AIF1',   markers:[0] },
+      { name:'GFAP',   markers:[1] },
+      { name:'RBFOX3', markers:[2] },
+      { name:'MBP',    markers:[3] },
+      { name:'PECAM1', markers:[4] },
+      { name:'CD3D',   markers:[5] },
+      { name:'MKI67',  markers:[0,5] }  // proliferation, shared
+    ];
+
+    var N = 1700;
+    var pts = [];
+    for (var k = 0; k < CLUSTERS.length; k++) {
+      var ang = (k / CLUSTERS.length) * Math.PI * 2;
+      var cx = Math.cos(ang) * 0.62, cy = Math.sin(ang) * 0.62;
+      var n = Math.round(N / CLUSTERS.length);
+      for (var i = 0; i < n; i++) {
+        pts.push({ x: cx + gauss() * 0.14, y: cy + gauss() * 0.14, cl: k });
+      }
+    }
+    // per-gene expression per point
+    pts.forEach(function (p) {
+      p.expr = GENES.map(function (g) {
+        var base = 0.06 * rnd();
+        var hit = g.markers.indexOf(p.cl) >= 0;
+        return hit ? Math.min(1, 0.55 + 0.45 * rnd()) : base + 0.05 * rnd();
+      });
+    });
+    cellCountEl.textContent = pts.length.toLocaleString() + ' cells';
+
+    // viridis interpolation
+    var VIR = [[68,1,84],[59,82,139],[33,145,140],[94,201,98],[253,231,37]];
+    function viridis(t){ t=Math.max(0,Math.min(1,t)); var s=t*(VIR.length-1); var i=Math.floor(s); var f=s-i; if(i>=VIR.length-1){i=VIR.length-2;f=1;} var a=VIR[i],b=VIR[i+1]; return 'rgb('+Math.round(a[0]+(b[0]-a[0])*f)+','+Math.round(a[1]+(b[1]-a[1])*f)+','+Math.round(a[2]+(b[2]-a[2])*f)+')'; }
+
+    var mode = -1; // -1 = cluster coloring, else gene index
+    var W = 0, H = 0, dpr = 1, pad = 18;
+    function resize(){
+      var r = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+    function sx(x){ return pad + (x + 1.1) / 2.2 * (W - 2 * pad); }
+    function sy(y){ return pad + (y + 1.1) / 2.2 * (H - 2 * pad); }
+
+    function colorFor(p){ return mode < 0 ? CLUSTERS[p.cl].color : viridis(p.expr[mode]); }
+
+    var intro = 0;
+    function draw(){
+      ctx.clearRect(0, 0, W, H);
+      var rad = Math.max(1.6, Math.min(2.6, W / 170));
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        p._sx = sx(p.x); p._sy = sy(p.y);
+        ctx.globalAlpha = 0.8 * intro;
+        ctx.fillStyle = colorFor(p);
+        ctx.beginPath();
+        ctx.arc(p._sx, p._sy, rad, 0, 6.283);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    // intro fade-in
+    function animate(){ intro = Math.min(1, intro + 0.06); draw(); if (intro < 1) requestAnimationFrame(animate); }
+
+    // gene buttons
+    var genesEl = document.getElementById('genes');
+    function setMode(m, btn){
+      mode = m;
+      genesEl.querySelectorAll('.gene').forEach(function(x){ x.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+      var showBar = m >= 0;
+      colorbar.classList.toggle('hidden', !showBar);
+      cbLabels.classList.toggle('hidden', !showBar);
+      colorModeEl.innerHTML = showBar
+        ? 'coloring&nbsp;·&nbsp;<b style="color:var(--text)">' + GENES[m].name + '</b> expression'
+        : 'coloring&nbsp;·&nbsp;cell type clusters';
+      draw();
+    }
+    var clusterBtn = document.createElement('button');
+    clusterBtn.className = 'gene active'; clusterBtn.textContent = 'clusters';
+    clusterBtn.addEventListener('click', function(){ setMode(-1, null); clusterBtn.classList.add('active'); });
+    genesEl.appendChild(clusterBtn);
+    GENES.forEach(function (g, gi) {
+      var b = document.createElement('button');
+      b.className = 'gene'; b.textContent = g.name;
+      b.addEventListener('click', function(){ clusterBtn.classList.remove('active'); setMode(gi, b); });
+      genesEl.appendChild(b);
+    });
+
+    // hover tooltip
+    var raf = false;
+    canvas.addEventListener('mousemove', function (e) {
+      if (raf) return; raf = true;
+      requestAnimationFrame(function () {
+        raf = false;
+        var r = canvas.getBoundingClientRect();
+        var mx = e.clientX - r.left, my = e.clientY - r.top, best = null, bd = 64;
+        for (var i = 0; i < pts.length; i++) {
+          var dx = pts[i]._sx - mx, dy = pts[i]._sy - my, d = dx*dx + dy*dy;
+          if (d < bd) { bd = d; best = pts[i]; }
+        }
+        if (best) {
+          tip.style.left = best._sx + 'px'; tip.style.top = best._sy + 'px';
+          tip.innerHTML = CLUSTERS[best.cl].name + (mode >= 0 ? ' · ' + GENES[mode].name + ' ' + best.expr[mode].toFixed(2) : '');
+          tip.style.opacity = 1;
+        } else { tip.style.opacity = 0; }
+      });
+    });
+    canvas.addEventListener('mouseleave', function(){ tip.style.opacity = 0; });
+
+    if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
+    window.addEventListener('resize', resize);
+    resize(); animate();
+  })();
+
+  document.getElementById('yr').textContent = '2026';
   </script>
 </body>
 </html>
