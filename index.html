@@ -21,7 +21,7 @@
       --bg:#0a0e14; --bg-soft:#0e131c; --panel:#111826;
       --border:#1e2a3a; --border-soft:#172230;
       --text:#f1f5f9; --muted:#94a3b8; --faint:#64748b;
-      --accent:#8fb3f0; --accent-dim:#7098e0; --accent-glow:rgba(143,179,240,.20);
+      --accent:#8fb3f0; --accent-dim:#7098e0; --accent-glow:rgba(143,179,240,.20); --dot:rgba(255,255,255,.06);
       --green:#7fd0a8; --purple:#c4a9f2; --amber:#f2cd8a; --cyan:#8fd6e6; --red:#f2a3a6;
       --header-grad:linear-gradient(95deg,#6d95d6 0%,#86a9e6 55%,#a7c5f5 100%);
       --header-line:rgba(255,255,255,.18);
@@ -32,7 +32,7 @@
       --bg:#f8fafc; --bg-soft:#ffffff; --panel:#ffffff;
       --border:#e2e8f0; --border-soft:#eef2f6;
       --text:#0f172a; --muted:#475569; --faint:#94a3b8;
-      --accent:#5f86dd; --accent-dim:#4f76d0; --accent-glow:rgba(95,134,221,.12);
+      --accent:#5f86dd; --accent-dim:#4f76d0; --accent-glow:rgba(95,134,221,.12); --dot:rgba(15,23,42,.06);
     }
     * { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -53,7 +53,7 @@
     .icon-btn svg { width:16px; height:16px; }
 
     main { max-width:1120px; margin:0 auto; padding:0 24px; }
-    section { padding:74px 0; border-bottom:1px solid var(--border-soft); }
+    section { padding:88px 0; border-bottom:1px solid var(--border-soft); }
     section:last-of-type { border-bottom:none; }
     .eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); display:inline-flex; align-items:center; gap:8px; }
     .eyebrow::before { content:""; width:22px; height:1px; background:var(--accent); opacity:.6; }
@@ -123,8 +123,18 @@
     .card:hover { transform:translateY(-4px); border-color:color-mix(in srgb, var(--accent) 55%, var(--border)); box-shadow:0 18px 40px -22px var(--accent); }
     .card:hover::after { opacity:1; }
     .card .cat-badge { position:absolute; top:13px; right:13px; z-index:2; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:5px; border:1px solid var(--border); color:var(--text); background:color-mix(in srgb,var(--panel) 78%,transparent); backdrop-filter:blur(4px); }
-    .card-thumb { margin:-22px -22px 18px; height:120px; overflow:hidden; border-bottom:1px solid var(--border-soft); border-radius:14px 14px 0 0; background:#0b1016; position:relative; }
-    .card-thumb svg { width:100%; height:100%; display:block; }
+    .card-thumb { margin:-22px -22px 18px; height:118px; overflow:hidden; border-bottom:1px solid var(--border-soft); border-radius:14px 14px 0 0; background:#0b1016; position:relative; display:grid; place-items:center; }
+    .card-thumb .cover-dots { position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.055) 1px, transparent 1.5px); background-size:15px 15px; }
+    .card-thumb .cover-ico { position:relative; width:48px; height:48px; opacity:.6; }
+    .card-thumb .cover-label { position:absolute; left:14px; bottom:11px; font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.72); }
+    .thumb-rna { background:radial-gradient(120% 130% at 82% -25%, rgba(143,179,240,.28), transparent 62%), #0b1016; }
+    .thumb-rna .cover-ico { color:#8fb3f0; }
+    .thumb-dna { background:radial-gradient(120% 130% at 82% -25%, rgba(143,214,176,.26), transparent 62%), #0b1016; }
+    .thumb-dna .cover-ico { color:#8fd6b0; }
+    .thumb-spatial { background:radial-gradient(120% 130% at 82% -25%, rgba(196,169,242,.28), transparent 62%), #0b1016; }
+    .thumb-spatial .cover-ico { color:#c4a9f2; }
+    .thumb-bench { background:radial-gradient(120% 130% at 82% -25%, rgba(242,205,138,.26), transparent 62%), #0b1016; }
+    .thumb-bench .cover-ico { color:#f2cd8a; }
     .card h3 { font-size:16.5px; font-weight:700; letter-spacing:-.01em; margin-bottom:9px; position:relative; }
     .card p { font-size:14px; color:var(--muted); flex:1; position:relative; }
     .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; position:relative; }
@@ -204,6 +214,19 @@
     footer a { color:var(--muted); }
     footer a:hover { color:var(--accent); }
 
+    /* section numbers */
+    .sec-num { color:var(--faint); margin-right:3px; }
+    .eyebrow.num::before { display:none; }
+    /* active nav */
+    .nav-links a.active { background:rgba(255,255,255,.2); color:#fff; }
+    /* hero dot grid */
+    .hero .dots { position:absolute; inset:0; z-index:0; pointer-events:none; background-image:radial-gradient(var(--dot) 1px, transparent 1.6px); background-size:26px 26px; -webkit-mask-image:radial-gradient(115% 95% at 18% -10%, #000 32%, transparent 74%); mask-image:radial-gradient(115% 95% at 18% -10%, #000 32%, transparent 74%); }
+    /* scroll reveal */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity:0; transform:translateY(16px); transition:opacity .55s ease, transform .55s ease; }
+      .reveal.in { opacity:1; transform:none; }
+    }
+
     @media (max-width:860px) {
       .hero-inner { grid-template-columns:1fr; gap:34px; }
       .about-grid { grid-template-columns:1fr; gap:28px; }
@@ -241,6 +264,7 @@
 
   <div id="top"></div>
   <section class="hero">
+    <span class="dots" aria-hidden="true"></span>
     <main class="hero-inner">
       <div>
         <span class="eyebrow">Ph.D. Computational Biologist · Genomics &amp; Multi-omics</span>
@@ -371,21 +395,21 @@
       <div class="grid" id="projGrid">
         <!-- DNA -->
         <div class="card" data-cat="dna">
-          <div class="card-thumb" data-viz="manhattan" data-seed="11"></div>
+          <div class="card-thumb" data-label="De novo mutation"></div>
           <span class="cat-badge">DNA</span>
           <h3>De novo mutation rate in Pacific oyster</h3>
           <p><em>Crassostrea gigas</em> trio sequencing to detect germline de novo mutations. A 22-step workflow: BWA → GATK4 HaplotypeCaller → joint genotyping → filtering → trio DNM calling → SnpEff → repeat-region exclusion.</p>
-          <div class="tags"><span class="tag g">GATK3/4</span><span class="tag">BWA</span><span class="tag">SAMtools</span><span class="tag">SnpEff</span><span class="tag a">In review</span></div>
+          <div class="tags"><span class="tag">GATK3/4</span><span class="tag">BWA</span><span class="tag">SAMtools</span><span class="tag">SnpEff</span><span class="tag a">In review</span></div>
           <div class="card-links">
             <a class="muted" href="https://github.com/rachelzh-hua/oyster_mutation" target="_blank" rel="noopener">Code ↗</a>
           </div>
         </div>
         <div class="card" data-cat="dna">
-          <div class="card-thumb" data-viz="manhattan" data-seed="27"></div>
+          <div class="card-thumb" data-label="Population genomics"></div>
           <span class="cat-badge">DNA</span>
           <h3>Mussel larvae genomics</h3>
           <p>Balancing-selection analysis of larval survival and growth in the Mediterranean mussel (<em>M. galloprovincialis</em>), from pooled sequencing of replicated family crosses. Published in G3.</p>
-          <div class="tags"><span class="tag b">R</span><span class="tag">Population genetics</span><span class="tag g">Published</span></div>
+          <div class="tags"><span class="tag">R</span><span class="tag">Population genetics</span><span class="tag g">Published</span></div>
           <div class="card-links">
             <a href="https://doi.org/10.1093/g3journal/jkad103" target="_blank" rel="noopener">Read the paper ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/mussel_larvae" target="_blank" rel="noopener">Code ↗</a>
@@ -397,7 +421,7 @@
           <span class="cat-badge">RNA</span>
           <h3>AD microglia RNA-seq portal</h3>
           <p>Reanalysis of <strong>GSE332551</strong>, Alzheimer's disease iPSC-derived microglia. An interactive expression browser deployed on Vercel.</p>
-          <div class="tags"><span class="tag b">Python</span><span class="tag">RNA-seq</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">RNA-seq</span><span class="tag">Vercel</span></div>
           <div class="card-links">
             <a class="muted" href="https://github.com/rachelzh-hua/ad-microglia-rnaseq-portal" target="_blank" rel="noopener">Code ↗</a>
           </div>
@@ -407,7 +431,7 @@
           <span class="cat-badge">RNA</span>
           <h3>May Lab prostate ADT portal</h3>
           <p>Mouse prostate androgen-deprivation-therapy transcriptomics reanalysis portal built for the May Lab.</p>
-          <div class="tags"><span class="tag b">Transcriptomics</span><span class="tag">Mouse</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag">Transcriptomics</span><span class="tag">Mouse</span><span class="tag">Vercel</span></div>
           <div class="card-links">
             <a href="https://may-prostate-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/may-prostate-portal" target="_blank" rel="noopener">Code</a>
@@ -419,7 +443,7 @@
           <span class="cat-badge">RNA</span>
           <h3>AML Citation Concierge</h3>
           <p>Spermidine reanalysis portal for acute myeloid leukemia, with a citation-aware concierge interface over the results.</p>
-          <div class="tags"><span class="tag a">AML</span><span class="tag">Reanalysis</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag">AML</span><span class="tag">Reanalysis</span><span class="tag">Vercel</span></div>
           <div class="card-links">
             <a href="https://aml-concierge-deploy.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/aml-concierge-deploy" target="_blank" rel="noopener">Code</a>
@@ -432,7 +456,7 @@
           <span class="cat-badge">Spatial</span>
           <h3>Aguado Lab aortic valve portal</h3>
           <p>Single-cell and spatial reanalysis portal for the Aguado Lab's aortic valve dataset, with a Vitessce-powered viewer.</p>
-          <div class="tags"><span class="tag p">Spatial</span><span class="tag">Vitessce</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag">Spatial</span><span class="tag">Vitessce</span><span class="tag">Vercel</span></div>
           <div class="card-links">
             <a href="https://aguado-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/aguado-portal" target="_blank" rel="noopener">Code</a>
@@ -440,11 +464,11 @@
           </div>
         </div>
         <div class="card" data-cat="spatial">
-          <div class="card-thumb" data-viz="spatial" data-seed="88"></div>
+          <div class="card-thumb" data-label="Multiplex imaging"></div>
           <span class="cat-badge">Spatial</span>
           <h3>MI-SPACE</h3>
           <p>NSCLC multiplex-imaging reanalysis portal (MI-SPACE) for exploring spatial single-cell structure in lung tumor samples.</p>
-          <div class="tags"><span class="tag p">Multiplex imaging</span><span class="tag">NSCLC</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag">Multiplex imaging</span><span class="tag">NSCLC</span><span class="tag">Vercel</span></div>
           <div class="card-links">
             <a href="https://mispace-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/mispace-portal" target="_blank" rel="noopener">Code</a>
@@ -456,7 +480,7 @@
           <span class="cat-badge">Spatial</span>
           <h3>Ritchie Lab spleen portal</h3>
           <p>SpatialBench spleen reanalysis portal for the Ritchie Lab, benchmarking spatial methods on spleen tissue.</p>
-          <div class="tags"><span class="tag p">Spatial</span><span class="tag">SpatialBench</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag">Spatial</span><span class="tag">SpatialBench</span><span class="tag">Vercel</span></div>
           <div class="card-links">
             <a href="https://ritchie-spleen-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/ritchie-spleen-portal" target="_blank" rel="noopener">Code</a>
@@ -469,7 +493,7 @@
           <span class="cat-badge">Bench</span>
           <h3>BrainLike benchmark portal</h3>
           <p>Report portal presenting results from the BrainLike benchmark.</p>
-          <div class="tags"><span class="tag b">Benchmark</span><span class="tag c">Vercel</span></div>
+          <div class="tags"><span class="tag">Benchmark</span><span class="tag">Vercel</span></div>
           <div class="card-links">
             <a href="https://brainlike-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/brainlike-portal" target="_blank" rel="noopener">Code</a>
@@ -720,47 +744,69 @@
     });
   })();
 
-  /* ============ project preview thumbnails (generated data-art) ============ */
+  /* ============ project preview covers ============ */
   (function () {
-    function rng(seed){ var a=(seed>>>0)||1; return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
-    var PAL = ['#8fb3f0','#8fd6b0','#c4a9f2','#f2cd8a','#8fd6e6','#f2a3a6'];
-    var W = 320, H = 120;
-    function dot(x,y,r,c,o){ return '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r+'" fill="'+c+'"'+(o!=null?' fill-opacity="'+o+'"':'')+'/>'; }
-    function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
-    function spatial(r){
-      var s='', K=4, cx=[72,182,246,140], cy=[46,40,82,88];
-      for(var i=0;i<130;i++){ var k=i%K; var x=clamp(cx[k]+(r()-0.5)*74,6,W-6); var y=clamp(cy[k]+(r()-0.5)*56,6,H-6); s+=dot(x,y,2.4,PAL[k],0.85); }
-      return s;
-    }
-    function volcano(r){
-      var s='';
-      s+='<line x1="'+(W/2-42)+'" y1="6" x2="'+(W/2-42)+'" y2="'+(H-6)+'" stroke="#334055" stroke-dasharray="3 3"/>';
-      s+='<line x1="'+(W/2+42)+'" y1="6" x2="'+(W/2+42)+'" y2="'+(H-6)+'" stroke="#334055" stroke-dasharray="3 3"/>';
-      for(var i=0;i<150;i++){ var lf=(r()-0.5)*4.4; var p=r(); var y=H-8-p*(H-22); var x=clamp(W/2+lf*30,6,W-6); var sig=Math.abs(lf)>1.4 && (H-y)>58; var c=sig?(lf>0?'#f2a3a6':'#8fb3f0'):'#586780'; s+=dot(x,y,2.1,c,sig?0.95:0.5); }
-      return s;
-    }
-    function manhattan(r){
-      var s='', bands=8, bw=W/bands;
-      s+='<line x1="0" y1="'+(H-12)+'" x2="'+W+'" y2="'+(H-12)+'" stroke="#334055"/>';
-      for(var i=0;i<175;i++){ var b=Math.floor(r()*bands); var x=b*bw+r()*bw; var mag=r(); var peak=r()>0.94; var y=clamp(peak?H-16-mag*(H-30)-26:H-16-mag*42,8,H-14); var c=peak?'#f2a3a6':(b%2?'#8fb3f0':'#6f97e0'); s+=dot(x,y,2,c,0.9); }
-      return s;
-    }
-    function heatmap(r){
-      var s='', cols=18, rows=6, cw=W/cols, ch=(H-8)/rows;
-      for(var y=0;y<rows;y++)for(var x=0;x<cols;x++){ var v=r(); var col='rgb('+Math.round(28+v*120)+','+Math.round(58+v*140)+','+Math.round(120+v*118)+')'; s+='<rect x="'+(x*cw).toFixed(1)+'" y="'+(4+y*ch).toFixed(1)+'" width="'+(cw-1.4).toFixed(1)+'" height="'+(ch-1.4).toFixed(1)+'" rx="1" fill="'+col+'"/>'; }
-      return s;
-    }
-    function bars(r){
-      var s='', n=7, gw=W/n;
-      for(var i=0;i<n;i++){ var h1=22+r()*78, h2=22+r()*78, bx=i*gw+7; s+='<rect x="'+bx+'" y="'+(H-6-h1)+'" width="'+(gw/2-6)+'" height="'+h1+'" rx="2" fill="#8fb3f0"/>'; s+='<rect x="'+(bx+gw/2-1)+'" y="'+(H-6-h2)+'" width="'+(gw/2-6)+'" height="'+h2+'" rx="2" fill="#8fd6e6"/>'; }
-      return s;
-    }
-    var VIZ = { spatial:spatial, volcano:volcano, manhattan:manhattan, heatmap:heatmap, bars:bars };
+    var ICONS = {
+      dna:'<path d="M8 3c0 4 8 5 8 9s-8 5-8 9M16 3c0 4-8 5-8 9s8 5 8 9M8 6h8M8 18h8M9.5 9h5M9.5 15h5"/>',
+      bars:'<path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/>',
+      grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+      chart:'<path d="M4 19V5M4 19h16M8 14l3-4 3 3 5-7"/>'
+    };
+    var MAP = {
+      dna:     { icon:'dna',   label:'DNA',       cls:'thumb-dna' },
+      rna:     { icon:'bars',  label:'RNA-seq',   cls:'thumb-rna' },
+      spatial: { icon:'grid',  label:'Spatial',   cls:'thumb-spatial' },
+      bench:   { icon:'chart', label:'Benchmark', cls:'thumb-bench' }
+    };
     document.querySelectorAll('.card-thumb').forEach(function (el) {
-      var type = el.getAttribute('data-viz'), seed = parseInt(el.getAttribute('data-seed')||'1', 10);
-      var fn = VIZ[type] || spatial;
-      el.innerHTML = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' + fn(rng(seed)) + '</svg>';
+      var card = el.closest('.card');
+      var cat = card ? card.getAttribute('data-cat') : 'rna';
+      var m = MAP[cat] || MAP.rna;
+      var label = el.getAttribute('data-label') || m.label;
+      el.classList.add(m.cls);
+      el.innerHTML = '<span class="cover-dots"></span>' +
+        '<svg class="cover-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + ICONS[m.icon] + '</svg>' +
+        '<span class="cover-label">' + label + '</span>';
     });
+  })();
+
+  /* ============ section numbers, active nav, scroll reveal ============ */
+  (function () {
+    // quiet section numbers on the eyebrows
+    ['about','experience','projects','publications','capabilities'].forEach(function (id, i) {
+      var s = document.getElementById(id); if (!s) return;
+      var e = s.querySelector('.eyebrow'); if (!e) return;
+      e.classList.add('num');
+      var n = document.createElement('span'); n.className = 'sec-num'; n.textContent = ('0' + (i + 1)).slice(-2);
+      e.insertBefore(document.createTextNode(' '), e.firstChild);
+      e.insertBefore(n, e.firstChild);
+    });
+
+    // active-section highlight in the nav
+    var links = {};
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(function (a) { links[a.getAttribute('href')] = a; });
+    var navObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        Object.keys(links).forEach(function (k) { links[k].classList.remove('active'); });
+        var l = links['#' + en.target.id]; if (l) l.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    ['about','experience','projects','publications','contact'].forEach(function (id) {
+      var s = document.getElementById(id); if (s) navObs.observe(s);
+    });
+
+    // scroll reveal (respects reduced-motion)
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('main section > .eyebrow, main section > .title, main section > .lead, .cap, .pub, .xp-item, .contact-card');
+    els.forEach(function (el) { el.classList.add('reveal'); });
+    document.querySelectorAll('#capGrid, .pubs, .xp').forEach(function (g) {
+      Array.prototype.forEach.call(g.children, function (c, i) { if (c.classList.contains('reveal')) c.style.transitionDelay = Math.min(i * 45, 270) + 'ms'; });
+    });
+    var revObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); revObs.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    els.forEach(function (el) { revObs.observe(el); });
   })();
 
   /* ============ live single-cell UMAP demo (continuously animated) ============ */
