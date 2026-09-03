@@ -275,6 +275,26 @@
     .case-grid p { font-size:13.5px; color:var(--muted); margin:0; line-height:1.6; }
     @media (max-width:760px){ .case-grid{ grid-template-columns:1fr; gap:16px; } }
 
+    /* project detail modal */
+    #projGrid .card { cursor:pointer; }
+    .pdetail-btn { font-family:inherit; font-size:13px; font-weight:600; color:var(--accent); background:none; border:none; cursor:pointer; padding:0; display:inline-flex; align-items:center; gap:5px; }
+    .pdetail-btn:hover { text-decoration:underline; }
+    .modal { position:fixed; inset:0; z-index:200; display:none; }
+    .modal.open { display:block; }
+    .modal-bg { position:absolute; inset:0; background:rgba(4,7,12,.66); backdrop-filter:blur(4px); }
+    .modal-card { position:relative; z-index:1; max-width:640px; width:calc(100% - 40px); margin:8vh auto 0; max-height:84vh; overflow:auto; background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:30px 32px; box-shadow:0 40px 90px -30px rgba(0,0,0,.7); }
+    @media (prefers-reduced-motion: no-preference){ .modal.open .modal-card { animation:modalin .22s ease; } }
+    @keyframes modalin { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+    .modal-x { position:absolute; top:15px; right:15px; width:34px; height:34px; border-radius:9px; border:1px solid var(--border); background:var(--bg-soft); color:var(--muted); cursor:pointer; font-size:14px; line-height:1; }
+    .modal-x:hover { color:var(--text); border-color:var(--accent); }
+    .pm-cat { font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--accent); }
+    .pm-title { font-family:var(--display); font-size:23px; font-weight:800; letter-spacing:-.02em; margin:8px 0 12px; padding-right:34px; line-height:1.25; }
+    .pm-desc { color:var(--muted); font-size:14.5px; }
+    .pm-par { display:flex; flex-direction:column; gap:15px; margin:20px 0; padding:20px 0; border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); }
+    .pm-par .cl { font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); display:block; margin-bottom:5px; }
+    .pm-par p { color:var(--muted); font-size:14px; margin:0; line-height:1.6; }
+    .pm-foot { margin-top:18px; }
+
     /* section numbers */
     .sec-num { color:var(--faint); margin-right:3px; }
     .eyebrow.num::before { display:none; }
@@ -383,7 +403,7 @@
       <div class="about-grid">
         <div>
           <p>I'm a <strong>Ph.D.-trained computational biologist</strong> who builds AI-enabled, reproducible bioinformatics workflows for genomics and multi-omics research, then turns them into interactive tools that help biologists interpret their data.</p>
-          <p>My work spans <strong>spatial transcriptomics, single-cell sequencing, long-read genomics, and epigenomics</strong>, with a strong emphasis on reproducibility, automation, and clear biological interpretation. I've delivered analyses across academic, biotech, and pharmaceutical projects, from raw QC through publication-quality figures.</p>
+          <p>I work across the full <strong>next-generation sequencing (NGS)</strong> stack, from raw reads through interpretation: <strong>spatial transcriptomics, single-cell sequencing, bulk RNA-seq, long-read genomics, variant calling, and epigenomics</strong>, with a strong emphasis on reproducibility, automation, and clear biological interpretation. I've delivered analyses across academic, biotech, and pharmaceutical projects, from raw QC through publication-quality figures.</p>
           <p>I also bring <strong>hands-on wet-lab experience</strong>, including sequencing library preparation, RNA and DNA extraction, PCR and qPCR, gel electrophoresis, western blot, cell culture, and liquid-handling automation, along with the sample QC that goes with them. That bench fluency helps me design analyses that reflect how the data was actually generated and catch technical artifacts early.</p>
           <p>During my Ph.D. in the Nuzhdin Lab I focused on <strong>population and evolutionary genomics</strong> in marine invertebrates, including de novo mutation-rate estimation and selection mapping.</p>
         </div>
@@ -451,30 +471,7 @@
     <section id="projects">
       <span class="eyebrow">Projects</span>
       <h2 class="title">Selected work</h2>
-      <p class="lead">Filter by data modality. Portals are password-gated deployments — reach out for access.</p>
-
-      <div class="case">
-        <div class="case-tag">Case study · De novo mutation rate</div>
-        <h3>Recalibrating the eukaryotic mutation-rate ceiling in Pacific oyster</h3>
-        <div class="case-grid">
-          <div>
-            <span class="cl">Problem</span>
-            <p>The upper limit of the eukaryotic germline mutation rate is poorly constrained, and high-fecundity bivalves are a demanding system for reliable de novo mutation detection.</p>
-          </div>
-          <div>
-            <span class="cl">Approach</span>
-            <p>Built a 22-step whole-genome trio pipeline (BWA → GATK4 HaplotypeCaller → joint genotyping → depth, allelic-balance and strand-bias filters → repeat masking) tuned to suppress false positives.</p>
-          </div>
-          <div>
-            <span class="cl">Result</span>
-            <p>Calibrated de novo mutation-rate estimates in <em>Crassostrea gigas</em> that recalibrate models for the upper limit of the eukaryotic mutation rate. Manuscript in review.</p>
-          </div>
-        </div>
-        <div class="card-links">
-          <a class="muted" href="https://github.com/rachelzh-hua/oyster_mutation" target="_blank" rel="noopener">Code ↗</a>
-        </div>
-      </div>
-
+      <p class="lead">Filter by data modality, and click any project for the full story. Portals are password-gated deployments — reach out for access.</p>
       <div class="filters" id="filters">
         <button class="filter active" data-filter="all">All <span class="n">9</span></button>
         <button class="filter" data-filter="rna">RNA-seq <span class="n">3</span></button>
@@ -665,6 +662,14 @@
     <a href="https://www.linkedin.com/in/rachel-hua-334656139" target="_blank" rel="noopener">LinkedIn</a> ·
     <a href="https://github.com/rachelzh-hua" target="_blank" rel="noopener">GitHub</a>
   </footer>
+
+  <div class="modal" id="pmodal" aria-hidden="true">
+    <div class="modal-bg" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+      <button class="modal-x" data-close aria-label="Close details">✕</button>
+      <div id="pmBody"></div>
+    </div>
+  </div>
 
   <script>
   /* ============ theme toggle ============ */
@@ -1067,6 +1072,115 @@
   })();
 
   document.getElementById('yr').textContent = '2026';
+
+  /* ============ project detail modal ============ */
+  (function () {
+    var DET = {
+      'oyster_mutation': {
+        problem: "The upper limit of the eukaryotic germline mutation rate is poorly constrained, and high-fecundity bivalves are a demanding system for reliable de novo mutation detection.",
+        approach: "Built a 22-step whole-genome trio pipeline (BWA to GATK4 HaplotypeCaller to joint genotyping to depth, allelic-balance and strand-bias filters to repeat masking) tuned to suppress false positives.",
+        result: "Calibrated de novo mutation-rate estimates in Crassostrea gigas that recalibrate models for the upper limit of the eukaryotic mutation rate. Manuscript in review."
+      },
+      'mussel_larvae': {
+        problem: "What genetic variation shapes larval survival and growth in the Mediterranean mussel across development?",
+        approach: "Pooled sequencing of replicated family crosses analyzed in R, tracking allele-frequency trajectories across 23 days of development and testing for selection.",
+        result: "Identified balancing-selection signatures and candidate loci, plus a growth versus survival trade-off. Published as first author in G3 (2023)."
+      },
+      'ad-microglia-rnaseq-portal': {
+        problem: "A published Alzheimer's iPSC-derived microglia RNA-seq dataset (GSE332551) was hard for wet-lab collaborators to explore.",
+        approach: "Reprocessed counts in Python, computed differential expression, and built an interactive expression browser deployed on Vercel.",
+        result: "A password-gated portal where collaborators query genes and conditions without touching the command line."
+      },
+      'may-prostate-portal': {
+        problem: "The May Lab needed a self-serve view of their mouse prostate androgen-deprivation-therapy transcriptomics.",
+        approach: "Reprocessed the transcriptomics data and packaged differential expression and figures into an interactive portal.",
+        result: "A gated portal the lab uses to explore treatment effects on prostate gene expression."
+      },
+      'aml-concierge-deploy': {
+        problem: "Reanalyze a spermidine acute-myeloid-leukemia dataset and make the findings navigable alongside their supporting literature.",
+        approach: "Built a reanalysis pipeline plus a citation-aware concierge interface layered over the results.",
+        result: "A portal that links each finding back to its references for fast interpretation."
+      },
+      'aguado-portal': {
+        problem: "The Aguado Lab wanted an interactive view of their single-cell and spatial aortic valve dataset.",
+        approach: "Processed the data and embedded a Vitessce-powered viewer with Zarr streaming inside a password-gated portal.",
+        result: "A browsable spatial single-cell portal the lab explores directly."
+      },
+      'mispace-portal': {
+        problem: "Explore spatial single-cell structure in NSCLC multiplex-imaging samples.",
+        approach: "Built segmentation and neighborhood analysis into a spatial portal (MI-SPACE) for per-cell markers and tissue structure.",
+        result: "An interactive portal for examining lung-tumor spatial organization."
+      },
+      'ritchie-spleen-portal': {
+        problem: "Benchmark spatial methods on spleen tissue for the Ritchie Lab (SpatialBench).",
+        approach: "Reanalyzed SpatialBench spleen data and packaged method comparisons into a portal.",
+        result: "A gated portal presenting spatial-method benchmarks on spleen tissue."
+      },
+      'brainlike-portal': {
+        problem: "How closely do iPSC-derived brain-cell models resemble native human tissue?",
+        approach: "Built a report portal that benchmarks uploaded models against an experimental floor and a native-tissue ceiling, integrating 11 published reference datasets across 10 public databases (GEO, SRA, NCBI, Ensembl, Allen Brain Cell Atlas, CZ CELLxGENE, Human Protein Atlas, UniProt, STRING, HCP).",
+        result: "An interactive benchmark with a built-in reference glossary, deployed password-gated on Vercel."
+      }
+    };
+
+    var modal = document.getElementById('pmodal');
+    if (!modal) return;
+    var body = document.getElementById('pmBody');
+    var lastFocus = null;
+
+    function slugOf(card){
+      var a = card.querySelector('a[href*="github.com/rachelzh-hua/"]');
+      if (!a) return null;
+      var m = a.getAttribute('href').match(/rachelzh-hua\/([^\/?#]+)/);
+      return m ? m[1] : null;
+    }
+    function txt(el){ return el ? el.textContent : ''; }
+    function open(card){
+      var d = DET[slugOf(card)] || {};
+      var title = txt(card.querySelector('h3'));
+      var cat = txt(card.querySelector('.cat-badge'));
+      var desc = card.querySelector('p') ? card.querySelector('p').innerHTML : '';
+      var tags = card.querySelector('.tags') ? card.querySelector('.tags').outerHTML : '';
+      var links = card.querySelector('.card-links') ? card.querySelector('.card-links').cloneNode(true) : null;
+      if (links) { var db = links.querySelector('.pdetail-btn'); if (db) db.remove(); }
+      var par = '';
+      if (d.problem || d.approach || d.result) {
+        par = '<div class="pm-par">' +
+          (d.problem ? '<div><span class="cl">Problem</span><p>' + d.problem + '</p></div>' : '') +
+          (d.approach ? '<div><span class="cl">Approach</span><p>' + d.approach + '</p></div>' : '') +
+          (d.result ? '<div><span class="cl">Result</span><p>' + d.result + '</p></div>' : '') +
+          '</div>';
+      }
+      body.innerHTML = '<div class="pm-cat">' + cat + '</div>' +
+        '<h2 class="pm-title" id="pmTitle">' + title + '</h2>' +
+        '<div class="pm-desc">' + desc + '</div>' + par + tags +
+        '<div class="pm-foot"></div>';
+      if (links) body.querySelector('.pm-foot').appendChild(links);
+      lastFocus = document.activeElement;
+      modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.modal-x').focus();
+    }
+    function close(){
+      modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    modal.addEventListener('click', function (e) { if (e.target.hasAttribute('data-close')) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+
+    document.querySelectorAll('#projGrid .card').forEach(function (card) {
+      var links = card.querySelector('.card-links');
+      if (links) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'pdetail-btn'; b.textContent = 'View details';
+        links.insertBefore(b, links.firstChild);
+      }
+      card.setAttribute('tabindex', '0'); card.setAttribute('role', 'button');
+      card.addEventListener('click', function (e) { if (e.target.closest('a')) return; open(card); });
+      card.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target === card) { e.preventDefault(); open(card); } });
+    });
+  })();
 
   /* ============ scroll progress + back to top ============ */
   (function () {
