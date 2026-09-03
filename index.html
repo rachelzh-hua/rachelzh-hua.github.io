@@ -117,8 +117,12 @@
     .demo-live { margin-left:auto; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--green); display:flex; align-items:center; gap:6px; }
     .demo-live::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 0 rgba(34,197,94,.6); animation:pulse 1.8s infinite; }
     @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)} 70%{box-shadow:0 0 0 7px rgba(34,197,94,0)} 100%{box-shadow:0 0 0 0 rgba(34,197,94,0)} }
-    .canvas-wrap { position:relative; width:100%; height:290px; border-radius:10px; overflow:hidden; background:var(--bg); border:1px solid var(--border-soft); }
+    .canvas-wrap { position:relative; width:100%; height:290px; border-radius:12px; overflow:hidden; background:radial-gradient(130% 120% at 30% 0%, #0d1420, #080b11 70%); border:1px solid var(--border-soft); box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), inset 0 24px 60px -30px rgba(59,130,246,.25); }
     #umap { width:100%; height:100%; display:block; cursor:crosshair; }
+    .legend { position:absolute; top:9px; left:9px; z-index:2; display:flex; flex-direction:column; gap:4px; padding:8px 10px; border-radius:9px; background:rgba(8,11,17,.55); backdrop-filter:blur(5px); border:1px solid rgba(255,255,255,.07); transition:opacity .25s; }
+    .legend.hidden { opacity:0; pointer-events:none; }
+    .legend .li { display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:10px; color:rgba(255,255,255,.78); }
+    .legend .sw { width:8px; height:8px; border-radius:50%; box-shadow:0 0 6px currentColor; flex:none; }
     .tip { position:absolute; pointer-events:none; background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:5px 9px; font-family:var(--mono); font-size:11px; color:var(--text); opacity:0; transform:translate(-50%,-130%); transition:opacity .1s; white-space:nowrap; z-index:3; }
     .demo-controls { margin-top:12px; }
     .demo-label { font-size:11.5px; color:var(--faint); font-family:var(--mono); margin-bottom:7px; display:flex; justify-content:space-between; }
@@ -624,7 +628,6 @@
       <div class="contact-card">
         <span class="eyebrow" style="justify-content:center">Contact</span>
         <h2 style="margin-top:14px">Get in touch</h2>
-        <p>Thanks for reviewing my work. I'd welcome the chance to talk.</p>
         <div class="cta" style="justify-content:center">
           <a class="btn btn-primary" href="mailto:rachelzh.hua@gmail.com">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -941,24 +944,51 @@
     }
     function sx(x){ return pad + (x+1.1)/2.2*(W-2*pad); }
     function sy(y){ return pad + (y+1.1)/2.2*(H-2*pad); }
-    function colorFor(p){ return mode<0 ? CLUSTERS[p.cl].color : viridis(p.expr[mode]); }
+    // color helpers for smooth transitions between colorings
+    function hexRgb(h){ return [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)]; }
+    function viridisRgb(t){ t=Math.max(0,Math.min(1,t)); var s=t*(VIR.length-1); var i=Math.floor(s); var f=s-i; if(i>=VIR.length-1){i=VIR.length-2;f=1;} var a=VIR[i],b=VIR[i+1]; return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f, a[2]+(b[2]-a[2])*f]; }
+    var CLUS_RGB = CLUSTERS.map(function(c){ return hexRgb(c.color); });
+    pts.forEach(function(p){ p.cc = CLUS_RGB[p.cl].slice(); });
+    function targetRgb(p){ return mode<0 ? CLUS_RGB[p.cl] : viridisRgb(p.expr[mode]); }
 
-    // continuous animation loop: every cell gently drifts, so the cloud is always alive
+    function drawGrid(){
+      ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(255,255,255,.035)';
+      var g = 5, i;
+      for (i=1;i<g;i++){ var x=pad+(W-2*pad)*i/g; ctx.beginPath(); ctx.moveTo(x,pad); ctx.lineTo(x,H-pad); ctx.stroke(); }
+      for (i=1;i<g;i++){ var y=pad+(H-2*pad)*i/g; ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(W-pad,y); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(255,255,255,.26)'; ctx.font = '10px ui-monospace, monospace';
+      ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText('UMAP-1', W-pad, H-6);
+      ctx.save(); ctx.translate(12, pad); ctx.rotate(-Math.PI/2); ctx.textAlign='right'; ctx.fillText('UMAP-2', 0, 0); ctx.restore();
+    }
+
+    // continuous animation loop: cells drift, glow softly, and recolor smoothly
     var t0 = null;
     function frame(now){
       if (t0 === null) t0 = now;
       var t = (now - t0)/1000;
-      var intro = Math.min(1, t/0.7);
-      var rad = Math.max(1.6, Math.min(2.6, W/170));
+      var intro = Math.min(1, t/0.85);
+      var rad = Math.max(1.7, Math.min(2.7, W/165));
       ctx.clearRect(0,0,W,H);
+      drawGrid();
+      // soft glow halos (additive)
+      ctx.globalCompositeOperation = 'lighter';
       for (var i=0;i<pts.length;i++){
         var p = pts[i];
         var dx = Math.sin(t*0.7*p.sp + p.ph) * p.am;
         var dy = Math.cos(t*0.6*p.sp + p.ph*1.3) * p.am;
         p._sx = sx(p.x + dx); p._sy = sy(p.y + dy);
-        ctx.globalAlpha = 0.82*intro;
-        ctx.fillStyle = colorFor(p);
-        ctx.beginPath(); ctx.arc(p._sx, p._sy, rad, 0, 6.283); ctx.fill();
+        var tg = targetRgb(p);
+        p.cc[0] += (tg[0]-p.cc[0])*0.11; p.cc[1] += (tg[1]-p.cc[1])*0.11; p.cc[2] += (tg[2]-p.cc[2])*0.11;
+        ctx.fillStyle = 'rgba('+Math.round(p.cc[0])+','+Math.round(p.cc[1])+','+Math.round(p.cc[2])+',0.13)';
+        ctx.beginPath(); ctx.arc(p._sx, p._sy, rad*2.3*intro, 0, 6.283); ctx.fill();
+      }
+      // crisp cores
+      ctx.globalCompositeOperation = 'source-over';
+      for (var m=0;m<pts.length;m++){
+        var q = pts[m];
+        ctx.globalAlpha = 0.92*intro;
+        ctx.fillStyle = 'rgb('+Math.round(q.cc[0])+','+Math.round(q.cc[1])+','+Math.round(q.cc[2])+')';
+        ctx.beginPath(); ctx.arc(q._sx, q._sy, rad, 0, 6.283); ctx.fill();
       }
       ctx.globalAlpha = 1;
       requestAnimationFrame(frame);
@@ -969,10 +999,17 @@
       var showBar = mode >= 0;
       colorbar.classList.toggle('hidden', !showBar);
       cbLabels.classList.toggle('hidden', !showBar);
+      if (legend) legend.classList.toggle('hidden', showBar);
       colorModeEl.innerHTML = showBar
         ? 'coloring&nbsp;·&nbsp;<b style="color:var(--text)">'+GENES[mode].name+'</b> expression'
         : 'coloring&nbsp;·&nbsp;cell type clusters';
     }
+    // cluster legend overlay (visible in cluster coloring)
+    var legend = document.createElement('div');
+    legend.className = 'legend';
+    legend.innerHTML = CLUSTERS.map(function(c){ return '<div class="li"><span class="sw" style="background:'+c.color+';color:'+c.color+'"></span>'+c.name+'</div>'; }).join('');
+    canvas.parentElement.appendChild(legend);
+
     var buttons = [];
     function highlight(){ buttons.forEach(function(b,idx){ b.classList.toggle('active', (idx===0 && mode<0) || (idx-1===mode)); }); }
     function setMode(m, userClick){ mode = m; if (userClick) autoCycle = false; highlight(); updateLabel(); }
