@@ -41,7 +41,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233b82f6'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' text-anchor='middle' fill='white'%3ERH%3C/text%3E%3C/svg%3E">
   <style>
     :root {
@@ -53,6 +53,7 @@
       --header-grad:linear-gradient(95deg,#6d95d6 0%,#86a9e6 55%,#a7c5f5 100%);
       --header-line:rgba(255,255,255,.18);
       --font:'Inter',system-ui,-apple-system,sans-serif;
+      --display:'Space Grotesk','Inter',system-ui,sans-serif;
       --mono:'JetBrains Mono',ui-monospace,monospace;
     }
     :root[data-theme="light"] {
@@ -69,6 +70,18 @@
     a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .filter:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:6px; }
     .skip { position:absolute; left:12px; top:-52px; z-index:100; background:var(--accent); color:#fff; padding:10px 16px; border-radius:8px; font-weight:600; font-size:14px; transition:top .16s ease; }
     .skip:focus { top:12px; }
+    /* display font for headings */
+    .hero h1, h2.title, .contact-card h2, .case h3, .card h3, .xp-role, .brand { font-family:var(--display); }
+    /* scroll progress bar */
+    .progress { position:fixed; top:0; left:0; height:3px; width:0; z-index:60; background:linear-gradient(90deg,var(--accent),var(--cyan)); transition:width .08s linear; }
+    /* back to top */
+    .totop { position:fixed; right:22px; bottom:22px; z-index:55; width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--accent); color:#fff; border:none; cursor:pointer; box-shadow:0 10px 26px -10px var(--accent); opacity:0; transform:translateY(10px); pointer-events:none; transition:opacity .2s, transform .2s; }
+    .totop.show { opacity:1; transform:none; pointer-events:auto; }
+    .totop:hover { transform:translateY(-2px); }
+    .totop svg { width:20px; height:20px; }
+    /* hover lift on rows */
+    .pub { transition:border-color .16s, transform .16s, box-shadow .2s; }
+    .pub:hover { transform:translateY(-2px); box-shadow:0 14px 32px -22px var(--accent); }
 
     /* header */
     header { position:sticky; top:0; z-index:50; background:var(--header-grad); border-bottom:1px solid var(--header-line); }
@@ -285,6 +298,10 @@
 </head>
 <body>
   <a class="skip" href="#about">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <button class="totop" id="totop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+  </button>
   <header>
     <nav class="nav">
       <a class="brand" href="#top"><span class="mark">RH</span> Rachel Hua</a>
@@ -1050,6 +1067,21 @@
   })();
 
   document.getElementById('yr').textContent = '2026';
+
+  /* ============ scroll progress + back to top ============ */
+  (function () {
+    var bar = document.getElementById('progress'), top = document.getElementById('totop'), ticking = false;
+    function update(){
+      var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+      var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+      bar.style.width = (pct * 100) + '%';
+      top.classList.toggle('show', (h.scrollTop || document.body.scrollTop) > 600);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    top.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    update();
+  })();
   </script>
 </body>
 </html>
