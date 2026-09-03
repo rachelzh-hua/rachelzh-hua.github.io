@@ -771,95 +771,104 @@
       { t:'NGS core & processing', icon:'reads',
         d:'Foundational short-read processing: quality control, alignment, and analysis-ready BAM/CRAM files.',
         groups:[
-          { g:'Alignment', tools:['BWA','Bowtie2','minimap2','STAR','HISAT2'] },
-          { g:'BAM / CRAM handling', tools:['samtools','Picard','bedtools'] },
-          { g:'QC', tools:['FastQC','MultiQC','Qualimap','RSeQC'] }
+          { g:'Alignment', tools:['BWA','BWA-MEM2','Bowtie2','minimap2','STAR','HISAT2'] },
+          { g:'BAM / CRAM handling', tools:['samtools','Picard','sambamba','bedtools'] },
+          { g:'QC & trimming', tools:['FastQC','MultiQC','Qualimap','RSeQC','fastp','Trim Galore'] }
         ] },
       { t:'Bulk RNA-seq', icon:'bars',
         d:'Quantify gene expression from bulk libraries and call differentially expressed genes between conditions.',
         groups:[
-          { g:'Quantify', tools:['Salmon','kallisto','RSEM','featureCounts'] },
-          { g:'Differential expression', tools:['DESeq2','edgeR','limma-voom'] }
+          { g:'Quantify', tools:['STAR','HISAT2','Salmon','kallisto','RSEM','featureCounts','HTSeq'] },
+          { g:'Differential expression', tools:['DESeq2','edgeR','limma-voom','apeglm'] },
+          { g:'Normalization & QC', tools:['TPM / CPM','ComBat','PCA'] },
+          { g:'Enrichment', tools:['fgsea','GSEA','CAMERA'] }
         ] },
       { t:'Single-cell RNA-seq', icon:'cells',
         d:'From raw counts to annotated cell types: QC, normalization, clustering, integration, and marker discovery.',
         groups:[
-          { g:'Preprocess', tools:['Cell Ranger','STARsolo','alevin-fry'] },
-          { g:'Analysis', tools:['Scanpy','Seurat','AnnData'] },
-          { g:'Integration', tools:['Harmony','scVI','MaxFuse','uniPort'] },
-          { g:'Annotation & trajectory', tools:['CellTypist','Leiden','marker genes','PAGA','pseudotime'] }
+          { g:'Preprocess', tools:['Cell Ranger','STARsolo','alevin-fry','kb-python','CellBender','Scrublet'] },
+          { g:'Analysis', tools:['Scanpy','Seurat','AnnData','Leiden'] },
+          { g:'Integration', tools:['Harmony','scVI','scANVI','BBKNN','MaxFuse','uniPort'] },
+          { g:'Annotation & trajectory', tools:['CellTypist','marker genes','PAGA','Monocle3','pseudotime','decoupler'] },
+          { g:'Differential & composition', tools:['pseudobulk','DESeq2','Milo','scCODA'] }
         ] },
       { t:'Spatial & imaging', icon:'grid',
         d:'Resolve expression and protein markers within tissue: spatial domains, neighborhoods, deconvolution, and single-cell imaging.',
         groups:[
-          { g:'Spatial platforms', tools:['10x Xenium','Visium','CODEX / PhenoCycler'] },
-          { g:'Spatial tools', tools:['Squidpy','Giotto','Vitessce','SpatialDE','cell2location'] },
-          { g:'Imaging segmentation', tools:['Cellpose','StarDist','QuPath'] },
-          { g:'Analysis', tools:['niche / neighborhood','ligand–receptor','scimap','spatial statistics'] }
+          { g:'Spatial platforms', tools:['10x Xenium','Visium','Slide-seq','MERFISH','CODEX / PhenoCycler'] },
+          { g:'Spatial tools', tools:['Squidpy','Giotto','Vitessce','stLearn','SpatialDE','Tangram','cell2location'] },
+          { g:'Imaging segmentation', tools:['Cellpose','StarDist','Mesmer','Baysor','QuPath'] },
+          { g:'Analysis', tools:['niche / neighborhood','ligand–receptor','CellPhoneDB','LIANA','image registration','spatial statistics'] }
         ] },
       { t:'DNA-seq & variant calling', icon:'dna',
         d:'Call and annotate SNVs and indels, and detect de novo mutations in trios with tailored QC for robust rate estimation.',
         groups:[
-          { g:'Calling', tools:['GATK4','bcftools','samtools','DeepVariant'] },
-          { g:'Annotation', tools:['snpEff','VEP','ACMG criteria'] },
-          { g:'De novo mutation (trios)', tools:['HaplotypeCaller','joint genotyping','trio filtering'] },
-          { g:'DNM QC filters', tools:['depth','allelic balance','strand bias','RepeatMasker'] }
+          { g:'Calling', tools:['GATK4','bcftools','samtools','DeepVariant','FreeBayes','Strelka2'] },
+          { g:'Annotation', tools:['snpEff','VEP','ANNOVAR','ACMG criteria','gnomAD','ClinVar'] },
+          { g:'De novo mutation (trios)', tools:['HaplotypeCaller','GenotypeGVCFs','trio filtering','DeNovoGear'] },
+          { g:'DNM QC filters', tools:['depth','allelic balance','strand bias','mappability','RepeatMasker'] }
         ] },
       { t:'Long-read sequencing', icon:'dna',
         d:'Process long-read data for structural variants and genome-wide features, through to clinical variant curation.',
         groups:[
-          { g:'Platforms', tools:['Oxford Nanopore','PacBio'] },
-          { g:'Alignment & SV', tools:['minimap2','SV calling'] },
-          { g:'Clinical', tools:['ACMG curation','rare-disease variants'] }
+          { g:'Platforms', tools:['Oxford Nanopore','PacBio HiFi'] },
+          { g:'Alignment & assembly', tools:['minimap2','winnowmap','Flye','hifiasm'] },
+          { g:'Structural variants', tools:['Sniffles','cuteSV','SVIM'] },
+          { g:'Methylation & phasing', tools:['modkit','WhatsHap'] },
+          { g:'Clinical', tools:['ACMG curation','gnomAD','ClinVar','rare-disease variants'] }
         ] },
       { t:'Population genomics', icon:'tree',
         d:'Characterize population structure, ancestry, diversity, and signatures of selection from multi-sample variant data.',
         groups:[
-          { g:'GWAS', tools:['PLINK','mixed linear models'] },
-          { g:'Selection', tools:['XP-CLR','FST','selective sweeps'] },
-          { g:'Structure', tools:['ADMIXTURE','PCA','ANGSD','VCFtools'] },
+          { g:'GWAS', tools:['PLINK','GEMMA','mixed linear models'] },
+          { g:'Selection', tools:['XP-CLR','FST','Tajima D','iHS','selective sweeps'] },
+          { g:'Structure & ancestry', tools:['ADMIXTURE','PCA','ANGSD','Treemix'] },
+          { g:'Diversity', tools:['VCFtools','nucleotide diversity','SFS'] },
           { g:'Assembly & QC', tools:['SPAdes','QUAST'] }
         ] },
       { t:'Epigenomics', icon:'bars',
-        d:'Map protein-DNA binding and chromatin features from CUT&Tag and related assays.',
+        d:'Map protein-DNA binding and chromatin accessibility from CUT&Tag, CUT&RUN, ChIP-seq, and ATAC-seq.',
         groups:[
-          { g:'Assays', tools:['CUT&Tag'] },
-          { g:'Peaks & signal', tools:['MACS3','deepTools','IGV'] }
+          { g:'Assays', tools:['CUT&Tag','CUT&RUN','ChIP-seq','ATAC-seq'] },
+          { g:'Peaks & domains', tools:['MACS3','SEACR','epic2','deepTools'] },
+          { g:'Signal & QC', tools:['bigWig','spike-in normalization','FRiP','IGV'] },
+          { g:'Motifs & annotation', tools:['HOMER','MEME'] }
         ] },
       { t:'Pathway & functional', icon:'flow',
         d:'Turn gene lists and ranked statistics into interpretable pathway- and ontology-level biology.',
         groups:[
-          { g:'Enrichment', tools:['GSEA','fgsea','CAMERA'] },
-          { g:'Ontology', tools:['GO','KEGG','gProfiler','enrichr'] }
+          { g:'Enrichment', tools:['GSEA','fgsea','CAMERA','ssGSEA'] },
+          { g:'Ontology & pathways', tools:['GO','KEGG','Reactome','MSigDB','gProfiler','enrichr'] },
+          { g:'Networks', tools:['STRING','decoupler'] }
         ] },
       { t:'Protein structure & design', icon:'atom',
         d:'Model structures, evaluate interactions and binding, and guide in silico mutagenesis and antibody optimization.',
         groups:[
-          { g:'Structure', tools:['AlphaFold','ESMFold'] },
-          { g:'Design', tools:['RFdiffusion','in silico mutagenesis'] },
-          { g:'Evaluation', tools:['binding affinity','stability','protein–protein interaction'] }
+          { g:'Structure prediction', tools:['AlphaFold','AlphaFold-Multimer','ESMFold','Boltz'] },
+          { g:'Design', tools:['RFdiffusion','ProteinMPNN','in silico mutagenesis'] },
+          { g:'Docking & evaluation', tools:['binding affinity','stability (ddG)','protein–protein interaction','PyMOL'] }
         ] },
       { t:'ML / AI for bioinformatics', icon:'chip',
         d:'Build predictive models and AI-assisted workflows, including retrieval-augmented literature and variant interpretation.',
         groups:[
-          { g:'Modeling', tools:['scikit-learn','clustering','statistical modeling'] },
+          { g:'Modeling', tools:['scikit-learn','XGBoost','PyTorch','clustering','statistical modeling'] },
           { g:'Dimensionality', tools:['PCA','UMAP','t-SNE'] },
-          { g:'LLM', tools:['RAG','LLM workflows','benchmarking'] }
+          { g:'LLM & RAG', tools:['RAG','LLM workflows','embeddings','benchmarking'] }
         ] },
       { t:'Reproducible pipelines & cloud', icon:'flow',
         d:'Package analyses into portable, version-pinned workflows that run on HPC and cloud.',
         groups:[
-          { g:'Orchestration', tools:['Nextflow','Snakemake'] },
-          { g:'Containers & HPC', tools:['Docker','SLURM'] },
-          { g:'Cloud', tools:['AWS','GCP','Lambda Cloud'] },
-          { g:'CI/CD', tools:['GitHub Actions','Git'] }
+          { g:'Orchestration', tools:['Nextflow','Snakemake','WDL'] },
+          { g:'Containers & HPC', tools:['Docker','Singularity','conda','SLURM'] },
+          { g:'Cloud', tools:['AWS','GCP','Lambda Cloud','S3'] },
+          { g:'CI/CD & version control', tools:['GitHub Actions','Git','pytest'] }
         ] },
       { t:'Interactive data portals', icon:'window',
         d:'Package any of the above into password-gated, self-serve portals collaborators can explore.',
         groups:[
-          { g:'Visualization', tools:['Vitessce','Plotly','JavaScript'] },
-          { g:'Data', tools:['Zarr','AnnData'] },
-          { g:'Deploy', tools:['Vercel','GitHub Actions'] }
+          { g:'Visualization', tools:['Vitessce','Plotly','D3','JavaScript'] },
+          { g:'Data & formats', tools:['Zarr','AnnData','HDF5','Parquet'] },
+          { g:'App & deploy', tools:['Streamlit','Vercel','GitHub Actions'] }
         ] }
     ];
     var ICONS = {
