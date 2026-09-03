@@ -493,11 +493,11 @@
       <h2 class="title">Selected work</h2>
       <p class="lead">Filter by data modality, and click any project for the full story. Portals are password-gated deployments — reach out for access.</p>
       <div class="filters" id="filters">
-        <button class="filter active" data-filter="all">All <span class="n">9</span></button>
+        <button class="filter active" data-filter="all">All <span class="n">10</span></button>
         <button class="filter" data-filter="rna">RNA-seq <span class="n">3</span></button>
         <button class="filter" data-filter="dna">DNA / Popgen <span class="n">2</span></button>
         <button class="filter" data-filter="spatial">Spatial &amp; Imaging <span class="n">3</span></button>
-        <button class="filter" data-filter="bench">Benchmarks <span class="n">1</span></button>
+        <button class="filter" data-filter="bench">Benchmarks <span class="n">2</span></button>
       </div>
       <div class="grid" id="projGrid">
         <!-- DNA -->
@@ -595,6 +595,14 @@
           </div>
         </div>
         <!-- BENCH -->
+        <div class="card" data-cat="bench" data-proj="sptranslation">
+          <div class="card-thumb"></div>
+          <span class="cat-badge">Bench</span>
+          <h3>spTranslation</h3>
+          <p>A unified benchmark for spatial-transcriptomics translation, spanning histology-to-expression, super-resolution, scRNA-to-spatial imputation, and cross-platform integration across 11 datasets.</p>
+          <div class="tags"><span class="tag">Spatial</span><span class="tag">Benchmark</span><span class="tag a">In review</span></div>
+          <div class="card-links"></div>
+        </div>
         <div class="card" data-cat="bench">
           <div class="card-thumb" data-shot="img/brainlike.jpg"></div>
           <span class="cat-badge">Bench</span>
@@ -1153,8 +1161,13 @@
       },
       'brainlike-portal': {
         problem: "How closely do iPSC-derived brain-cell models resemble native human tissue?",
-        approach: "Built a report portal that benchmarks uploaded models against an experimental floor and a native-tissue ceiling, integrating 11 published reference datasets across 10 public databases (GEO, SRA, NCBI, Ensembl, Allen Brain Cell Atlas, CZ CELLxGENE, Human Protein Atlas, UniProt, STRING, HCP).",
+        approach: "Built an interactive benchmarking portal that scores iPSC-derived microglia and neurons against experimental-floor and native-tissue-ceiling references, integrating 11 published datasets across 10 public resources (GEO, SRA, NCBI, Ensembl, Allen Brain Cell Atlas, CZ CELLxGENE, Human Protein Atlas, UniProt, STRING, HCP).",
         result: "An interactive benchmark with a built-in reference glossary, deployed password-gated on Vercel."
+      },
+      'sptranslation': {
+        problem: "Spatial-transcriptomics translation methods are evaluated inconsistently, so it is hard to know which best preserve real biological structure.",
+        approach: "Built spTranslation, a unified benchmark across four tasks (histology-to-expression, super-resolution, scRNA-to-spatial imputation, and cross-platform integration), scoring state-of-the-art methods on 11 datasets with expression-fidelity and spatial-structure metrics.",
+        result: "A ranking that surfaces the methods that best preserve biologically meaningful spatial patterns. Manuscript in review (reports z(PCC) + z(LISA))."
       }
     };
 
@@ -1164,6 +1177,7 @@
     var lastFocus = null;
 
     function slugOf(card){
+      var dp = card.getAttribute('data-proj'); if (dp) return dp;
       var a = card.querySelector('a[href*="github.com/rachelzh-hua/"]');
       if (!a) return null;
       var m = a.getAttribute('href').match(/rachelzh-hua\/([^\/?#]+)/);
