@@ -164,15 +164,16 @@
     .filter:hover { border-color:var(--accent); color:var(--text); }
     .filter.active { background:var(--accent); border-color:var(--accent); color:#fff; }
     .filter .n { opacity:.65; margin-left:5px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(285px,1fr)); gap:18px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+    @media (max-width:680px){ .grid { grid-template-columns:1fr; } }
     .card { position:relative; border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:22px; display:flex; flex-direction:column; transition:border-color .18s, transform .18s, box-shadow .25s; overflow:hidden; }
     .card::after { content:""; position:absolute; inset:0; border-radius:14px; pointer-events:none; background:radial-gradient(340px 160px at 100% 0%, var(--accent-glow), transparent 70%); opacity:0; transition:opacity .25s; }
     .card:hover { transform:translateY(-4px); border-color:color-mix(in srgb, var(--accent) 55%, var(--border)); box-shadow:0 18px 40px -22px var(--accent); }
     .card:hover::after { opacity:1; }
     .card .cat-badge { position:absolute; top:13px; right:13px; z-index:2; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:5px; border:1px solid var(--border); color:var(--text); background:color-mix(in srgb,var(--panel) 78%,transparent); backdrop-filter:blur(4px); }
-    .card-thumb { margin:-22px -22px 18px; height:118px; overflow:hidden; border-bottom:1px solid var(--border-soft); border-radius:14px 14px 0 0; background:#0b1016; position:relative; display:grid; place-items:center; }
+    .card-thumb { margin:-22px -22px 18px; height:178px; overflow:hidden; border-bottom:1px solid var(--border-soft); border-radius:14px 14px 0 0; background:#0b1016; position:relative; display:grid; place-items:center; }
     .card-thumb .cover-dots { position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.055) 1px, transparent 1.5px); background-size:15px 15px; }
-    .card-thumb .cover-ico { position:relative; width:48px; height:48px; opacity:.6; }
+    .card-thumb .cover-ico { position:relative; width:60px; height:60px; opacity:.62; }
     .card-thumb .cover-label { position:absolute; left:14px; bottom:11px; font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.72); }
     .card-thumb.has-shot { background:#0b1016; }
     .card-thumb .cover-img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
@@ -543,23 +544,6 @@
         <button class="filter" data-filter="bench">Benchmarks <span class="n">2</span></button>
       </div>
 
-      <!-- FEATURED FLAGSHIP -->
-      <div class="featured" id="featured" data-cat="spatial" data-proj="aguado-portal" tabindex="0" role="button" aria-label="Featured project: Aguado Lab aortic valve portal — open details">
-        <div class="fimg"><img src="img/aguado-featured.jpg" alt="Screenshot of the Aguado Lab aortic valve portal" loading="lazy"></div>
-        <div class="fbody">
-          <div class="flabel"><span class="fdot" aria-hidden="true"></span> Featured · Spatial</div>
-          <span class="cat-badge" hidden>Spatial</span>
-          <h3>Aguado Lab aortic valve portal</h3>
-          <p>An interactive single-cell and spatial portal for the Aguado Lab's human aortic valve atlas: 9 scRNA-seq samples and 8 Visium sections, with a Vitessce-powered viewer for point-and-click exploration of calcification-associated cell programs.</p>
-          <div class="tags"><span class="tag">Spatial</span><span class="tag">Single-cell</span><span class="tag">Vitessce</span><span class="tag">Vercel</span></div>
-          <div class="card-links">
-            <a href="https://aguado-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
-            <a class="muted" href="https://github.com/rachelzh-hua/aguado-portal" target="_blank" rel="noopener">Code</a>
-            <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
-          </div>
-        </div>
-      </div>
-
       <div class="grid" id="projGrid">
         <div class="group-head" data-group>Genomics pipelines <span class="gh-n">· 2</span></div>
         <div class="card" data-cat="dna">
@@ -584,7 +568,19 @@
           </div>
         </div>
 
-        <div class="group-head" data-group>Interactive data portals <span class="gh-n">· 5</span></div>
+        <div class="group-head" data-group>Interactive data portals <span class="gh-n">· 6</span></div>
+        <div class="card" data-cat="spatial">
+          <div class="card-thumb" data-shot="img/aguado.jpg"></div>
+          <span class="cat-badge">Spatial</span>
+          <h3>Aguado Lab aortic valve portal</h3>
+          <p>Single-cell and spatial portal for the Aguado Lab's human aortic valve atlas (9 scRNA-seq samples, 8 Visium sections), with a Vitessce-powered viewer.</p>
+          <div class="tags"><span class="tag">Spatial</span><span class="tag">Single-cell</span><span class="tag">Vitessce</span><span class="tag">Vercel</span></div>
+          <div class="card-links">
+            <a href="https://aguado-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
+            <a class="muted" href="https://github.com/rachelzh-hua/aguado-portal" target="_blank" rel="noopener">Code</a>
+            <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
+          </div>
+        </div>
         <div class="card" data-cat="rna">
           <div class="card-thumb" data-shot="img/may.jpg"></div>
           <span class="cat-badge">RNA</span>
