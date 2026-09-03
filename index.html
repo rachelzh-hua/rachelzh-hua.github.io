@@ -537,10 +537,10 @@
       <h2 class="title">Selected work</h2>
       <p class="lead">Filter by data modality, and click any project for the full story. Portals are password-gated deployments — reach out for access.</p>
       <div class="filters" id="filters">
-        <button class="filter active" data-filter="all">All <span class="n">10</span></button>
+        <button class="filter active" data-filter="all">All <span class="n">11</span></button>
         <button class="filter" data-filter="rna">RNA-seq <span class="n">3</span></button>
         <button class="filter" data-filter="dna">DNA / Popgen <span class="n">2</span></button>
-        <button class="filter" data-filter="spatial">Spatial &amp; Imaging <span class="n">3</span></button>
+        <button class="filter" data-filter="spatial">Spatial &amp; Imaging <span class="n">4</span></button>
         <button class="filter" data-filter="bench">Benchmarks <span class="n">2</span></button>
       </div>
 
@@ -568,7 +568,7 @@
           </div>
         </div>
 
-        <div class="group-head" data-group>Interactive data portals <span class="gh-n">· 6</span></div>
+        <div class="group-head" data-group>Interactive data portals <span class="gh-n">· 7</span></div>
         <div class="card" data-cat="spatial">
           <div class="card-thumb" data-shot="img/aguado.jpg"></div>
           <span class="cat-badge">Spatial</span>
@@ -626,6 +626,17 @@
           <div class="card-links">
             <a href="https://ritchie-spleen-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/ritchie-spleen-portal" target="_blank" rel="noopener">Code</a>
+            <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
+          </div>
+        </div>
+        <div class="card" data-cat="spatial" data-proj="mcc-xenium">
+          <div class="card-thumb" data-label="Xenium"></div>
+          <span class="cat-badge">Spatial</span>
+          <h3>MCC Xenium spatial portal</h3>
+          <p>10x Xenium spatial transcriptomics integrated with matched H&amp;E histology across a 218K+ cell Merkel cell carcinoma tissue microarray, aligning molecular and histological features to map the tumor–immune microenvironment.</p>
+          <div class="tags"><span class="tag">Xenium</span><span class="tag">H&amp;E</span><span class="tag">Merkel cell carcinoma</span><span class="tag">Vercel</span></div>
+          <div class="card-links">
+            <a href="https://mcc-xenium.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
           </div>
         </div>
@@ -1232,6 +1243,11 @@
         problem: "How closely do iPSC-derived brain-cell models resemble native human tissue?",
         approach: "Built an interactive benchmarking portal that scores iPSC-derived microglia and neurons against experimental-floor and native-tissue-ceiling references, integrating 11 published datasets across 10 public resources (GEO, SRA, NCBI, Ensembl, Allen Brain Cell Atlas, CZ CELLxGENE, Human Protein Atlas, UniProt, STRING, HCP).",
         result: "An interactive benchmark with a built-in reference glossary, deployed password-gated on Vercel."
+      },
+      'mcc-xenium': {
+        problem: "Merkel cell carcinoma is rare and aggressive, and understanding its tumor–immune microenvironment needs molecular and histological features aligned in the same tissue.",
+        approach: "Integrated 10x Xenium spatial transcriptomics with matched H&E histology across a 218K+ cell tissue microarray, building image-registration and spatial-analysis workflows to segment tissue cores, identify tumor regions, and characterize microenvironment heterogeneity.",
+        result: "A spatial portal aligning molecular and histological views of MCC to explore tumor–immune structure. Password-gated."
       },
       'sptranslation': {
         problem: "Spatial-transcriptomics translation methods are evaluated inconsistently, so it is hard to know which best preserve real biological structure.",
