@@ -277,6 +277,25 @@
     .case-grid p { font-size:13.5px; color:var(--muted); margin:0; line-height:1.6; }
     @media (max-width:760px){ .case-grid{ grid-template-columns:1fr; gap:16px; } }
 
+    /* featured flagship project */
+    .featured { display:grid; grid-template-columns:1.05fr 1fr; border:1px solid color-mix(in srgb,var(--accent) 32%,var(--border)); border-radius:16px; overflow:hidden; margin:22px 0 8px; background:var(--panel); cursor:pointer; transition:border-color .18s, box-shadow .25s, transform .18s; }
+    .featured:hover { border-color:color-mix(in srgb,var(--accent) 55%,var(--border)); box-shadow:0 20px 46px -26px var(--accent); transform:translateY(-2px); }
+    .featured .fimg { position:relative; min-height:250px; background:#0b1016; border-right:1px solid var(--border-soft); }
+    .featured .fimg img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+    .featured .fbody { padding:26px 28px; display:flex; flex-direction:column; }
+    .featured .flabel { font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--accent); margin-bottom:11px; display:flex; align-items:center; gap:7px; }
+    .featured .fdot { width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
+    .featured h3 { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
+    .featured p { color:var(--muted); font-size:14.5px; flex:1; margin:0; }
+    .featured .tags { margin-top:16px; }
+    .featured .card-links { margin-top:16px; }
+    @media (max-width:720px){ .featured{ grid-template-columns:1fr; } .featured .fimg{ min-height:160px; border-right:none; border-bottom:1px solid var(--border-soft); } }
+    /* project group headers */
+    .group-head { grid-column:1 / -1; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); display:flex; align-items:center; gap:12px; margin:14px 0 0; }
+    .group-head:first-child { margin-top:0; }
+    .group-head::after { content:""; flex:1; height:1px; background:var(--border-soft); }
+    .group-head .gh-n { color:var(--faint); }
+
     /* capabilities: workflow band */
     .flow { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:24px 0 26px; padding:14px 16px; border:1px solid var(--border); border-radius:12px; background:var(--panel); }
     .flow-step { font-family:var(--mono); font-size:11.5px; color:var(--text); background:var(--bg-soft); border:1px solid var(--border); border-radius:7px; padding:6px 11px; white-space:nowrap; }
@@ -523,8 +542,26 @@
         <button class="filter" data-filter="spatial">Spatial &amp; Imaging <span class="n">3</span></button>
         <button class="filter" data-filter="bench">Benchmarks <span class="n">2</span></button>
       </div>
+
+      <!-- FEATURED FLAGSHIP -->
+      <div class="featured" id="featured" data-cat="spatial" data-proj="aguado-portal" tabindex="0" role="button" aria-label="Featured project: Aguado Lab aortic valve portal — open details">
+        <div class="fimg"><img src="img/aguado-featured.jpg" alt="Screenshot of the Aguado Lab aortic valve portal" loading="lazy"></div>
+        <div class="fbody">
+          <div class="flabel"><span class="fdot" aria-hidden="true"></span> Featured · Spatial</div>
+          <span class="cat-badge" hidden>Spatial</span>
+          <h3>Aguado Lab aortic valve portal</h3>
+          <p>An interactive single-cell and spatial portal for the Aguado Lab's human aortic valve atlas: 9 scRNA-seq samples and 8 Visium sections, with a Vitessce-powered viewer for point-and-click exploration of calcification-associated cell programs.</p>
+          <div class="tags"><span class="tag">Spatial</span><span class="tag">Single-cell</span><span class="tag">Vitessce</span><span class="tag">Vercel</span></div>
+          <div class="card-links">
+            <a href="https://aguado-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
+            <a class="muted" href="https://github.com/rachelzh-hua/aguado-portal" target="_blank" rel="noopener">Code</a>
+            <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
+          </div>
+        </div>
+      </div>
+
       <div class="grid" id="projGrid">
-        <!-- DNA -->
+        <div class="group-head" data-group>Genomics pipelines <span class="gh-n">· 2</span></div>
         <div class="card" data-cat="dna">
           <div class="card-thumb" data-label="De novo mutation"></div>
           <span class="cat-badge">DNA</span>
@@ -546,17 +583,8 @@
             <a class="muted" href="https://github.com/rachelzh-hua/mussel_larvae" target="_blank" rel="noopener">Code ↗</a>
           </div>
         </div>
-        <!-- RNA -->
-        <div class="card" data-cat="rna">
-          <div class="card-thumb" data-viz="volcano" data-seed="7"></div>
-          <span class="cat-badge">RNA</span>
-          <h3>AD microglia RNA-seq portal</h3>
-          <p>Reanalysis of <strong>GSE332551</strong>, Alzheimer's disease iPSC-derived microglia. An interactive expression browser deployed on Vercel.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">RNA-seq</span><span class="tag">Vercel</span></div>
-          <div class="card-links">
-            <a class="muted" href="https://github.com/rachelzh-hua/ad-microglia-rnaseq-portal" target="_blank" rel="noopener">Code ↗</a>
-          </div>
-        </div>
+
+        <div class="group-head" data-group>Interactive data portals <span class="gh-n">· 5</span></div>
         <div class="card" data-cat="rna">
           <div class="card-thumb" data-shot="img/may.jpg"></div>
           <span class="cat-badge">RNA</span>
@@ -578,19 +606,6 @@
           <div class="card-links">
             <a href="https://aml-concierge-deploy.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             <a class="muted" href="https://github.com/rachelzh-hua/aml-concierge-deploy" target="_blank" rel="noopener">Code</a>
-            <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
-          </div>
-        </div>
-        <!-- SPATIAL -->
-        <div class="card" data-cat="spatial">
-          <div class="card-thumb" data-shot="img/aguado.jpg"></div>
-          <span class="cat-badge">Spatial</span>
-          <h3>Aguado Lab aortic valve portal</h3>
-          <p>Single-cell and spatial reanalysis portal for the Aguado Lab's aortic valve dataset, with a Vitessce-powered viewer.</p>
-          <div class="tags"><span class="tag">Spatial</span><span class="tag">Vitessce</span><span class="tag">Vercel</span></div>
-          <div class="card-links">
-            <a href="https://aguado-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
-            <a class="muted" href="https://github.com/rachelzh-hua/aguado-portal" target="_blank" rel="noopener">Code</a>
             <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
           </div>
         </div>
@@ -618,7 +633,30 @@
             <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
           </div>
         </div>
-        <!-- BENCH -->
+        <div class="card" data-cat="rna">
+          <div class="card-thumb" data-label="RNA-seq"></div>
+          <span class="cat-badge">RNA</span>
+          <h3>AD microglia RNA-seq portal</h3>
+          <p>Reanalysis of <strong>GSE332551</strong>, Alzheimer's disease iPSC-derived microglia. An interactive expression browser deployed on Vercel.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">RNA-seq</span><span class="tag">Vercel</span></div>
+          <div class="card-links">
+            <a class="muted" href="https://github.com/rachelzh-hua/ad-microglia-rnaseq-portal" target="_blank" rel="noopener">Code ↗</a>
+          </div>
+        </div>
+
+        <div class="group-head" data-group>Benchmarks <span class="gh-n">· 2</span></div>
+        <div class="card" data-cat="bench">
+          <div class="card-thumb" data-shot="img/brainlike.jpg"></div>
+          <span class="cat-badge">Bench</span>
+          <h3>BrainLike benchmark portal</h3>
+          <p>An interactive benchmark scoring iPSC-derived microglia and neurons against experimental-floor and native-tissue-ceiling references, integrating 11 datasets across 10 public resources.</p>
+          <div class="tags"><span class="tag">Benchmark</span><span class="tag">Vercel</span></div>
+          <div class="card-links">
+            <a href="https://brainlike-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
+            <a class="muted" href="https://github.com/rachelzh-hua/brainlike-portal" target="_blank" rel="noopener">Code</a>
+            <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
+          </div>
+        </div>
         <div class="card" data-cat="bench" data-proj="sptranslation">
           <div class="card-thumb"></div>
           <span class="cat-badge">Bench</span>
@@ -626,18 +664,6 @@
           <p>A unified benchmark for spatial-transcriptomics translation, spanning histology-to-expression, super-resolution, scRNA-to-spatial imputation, and cross-platform integration across 11 datasets.</p>
           <div class="tags"><span class="tag">Spatial</span><span class="tag">Benchmark</span><span class="tag a">In review</span></div>
           <div class="card-links"></div>
-        </div>
-        <div class="card" data-cat="bench">
-          <div class="card-thumb" data-shot="img/brainlike.jpg"></div>
-          <span class="cat-badge">Bench</span>
-          <h3>BrainLike benchmark portal</h3>
-          <p>Report portal presenting results from the BrainLike benchmark.</p>
-          <div class="tags"><span class="tag">Benchmark</span><span class="tag">Vercel</span></div>
-          <div class="card-links">
-            <a href="https://brainlike-portal.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
-            <a class="muted" href="https://github.com/rachelzh-hua/brainlike-portal" target="_blank" rel="noopener">Code</a>
-            <span class="gated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>gated</span>
-          </div>
         </div>
       </div>
     </section>
@@ -752,15 +778,19 @@
   (function () {
     var filters = document.querySelectorAll('.filter');
     var cards = document.querySelectorAll('#projGrid .card');
+    var heads = document.querySelectorAll('#projGrid .group-head');
+    var featured = document.getElementById('featured');
     filters.forEach(function (f) {
       f.addEventListener('click', function () {
         filters.forEach(function(x){ x.classList.remove('active'); });
         f.classList.add('active');
-        var cat = f.dataset.filter;
+        var cat = f.dataset.filter, isAll = cat === 'all';
         cards.forEach(function (c) {
-          var show = cat === 'all' || c.dataset.cat === cat;
+          var show = isAll || c.dataset.cat === cat;
           c.style.display = show ? 'flex' : 'none';
         });
+        heads.forEach(function (h) { h.style.display = isAll ? '' : 'none'; });
+        if (featured) featured.style.display = (isAll || featured.getAttribute('data-cat') === cat) ? '' : 'none';
       });
     });
   })();
@@ -1270,7 +1300,7 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 
-    document.querySelectorAll('#projGrid .card').forEach(function (card) {
+    document.querySelectorAll('#projGrid .card, #featured').forEach(function (card) {
       var links = card.querySelector('.card-links');
       if (links) {
         var b = document.createElement('button');
