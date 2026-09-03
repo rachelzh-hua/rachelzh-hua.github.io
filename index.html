@@ -174,6 +174,8 @@
     .card-thumb .cover-dots { position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.055) 1px, transparent 1.5px); background-size:15px 15px; }
     .card-thumb .cover-ico { position:relative; width:48px; height:48px; opacity:.6; }
     .card-thumb .cover-label { position:absolute; left:14px; bottom:11px; font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.72); }
+    .card-thumb.has-shot { background:#0b1016; }
+    .card-thumb .cover-img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
     .thumb-rna { background:radial-gradient(120% 130% at 82% -25%, rgba(143,179,240,.28), transparent 62%), #0b1016; }
     .thumb-rna .cover-ico { color:#8fb3f0; }
     .thumb-dna { background:radial-gradient(120% 130% at 82% -25%, rgba(143,214,176,.26), transparent 62%), #0b1016; }
@@ -374,7 +376,6 @@
         <span class="eyebrow">Ph.D. Computational Biologist · Genomics &amp; Multi-omics</span>
         <h1>Reproducible genomics,<br><span class="accent">built for biologists.</span></h1>
         <p class="lead">I'm a Ph.D.-trained computational biologist. I build AI-enabled, reproducible bioinformatics pipelines across spatial transcriptomics, single-cell, long-read, and epigenomics, then turn them into interactive tools that help biologists interpret their data.</p>
-        <p class="nowline">Currently Bioinformatics Engineer at <strong>Novaflow</strong>.</p>
         <div class="cta">
           <a class="btn btn-primary" href="#projects">View projects
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -533,7 +534,7 @@
           </div>
         </div>
         <div class="card" data-cat="rna">
-          <div class="card-thumb" data-viz="volcano" data-seed="19"></div>
+          <div class="card-thumb" data-shot="img/may.jpg"></div>
           <span class="cat-badge">RNA</span>
           <h3>May Lab prostate ADT portal</h3>
           <p>Mouse prostate androgen-deprivation-therapy transcriptomics reanalysis portal built for the May Lab.</p>
@@ -545,7 +546,7 @@
           </div>
         </div>
         <div class="card" data-cat="rna">
-          <div class="card-thumb" data-viz="heatmap" data-seed="42"></div>
+          <div class="card-thumb" data-shot="img/aml.jpg"></div>
           <span class="cat-badge">RNA</span>
           <h3>AML Citation Concierge</h3>
           <p>Spermidine reanalysis portal for acute myeloid leukemia, with a citation-aware concierge interface over the results.</p>
@@ -558,7 +559,7 @@
         </div>
         <!-- SPATIAL -->
         <div class="card" data-cat="spatial">
-          <div class="card-thumb" data-viz="spatial" data-seed="3"></div>
+          <div class="card-thumb" data-shot="img/aguado.jpg"></div>
           <span class="cat-badge">Spatial</span>
           <h3>Aguado Lab aortic valve portal</h3>
           <p>Single-cell and spatial reanalysis portal for the Aguado Lab's aortic valve dataset, with a Vitessce-powered viewer.</p>
@@ -570,7 +571,7 @@
           </div>
         </div>
         <div class="card" data-cat="spatial">
-          <div class="card-thumb" data-label="Multiplex imaging"></div>
+          <div class="card-thumb" data-shot="img/mispace.jpg"></div>
           <span class="cat-badge">Spatial</span>
           <h3>MI-SPACE</h3>
           <p>NSCLC multiplex-imaging reanalysis portal (MI-SPACE) for exploring spatial single-cell structure in lung tumor samples.</p>
@@ -582,7 +583,7 @@
           </div>
         </div>
         <div class="card" data-cat="spatial">
-          <div class="card-thumb" data-viz="spatial" data-seed="55"></div>
+          <div class="card-thumb" data-shot="img/ritchie.jpg"></div>
           <span class="cat-badge">Spatial</span>
           <h3>Ritchie Lab spleen portal</h3>
           <p>SpatialBench spleen reanalysis portal for the Ritchie Lab, benchmarking spatial methods on spleen tissue.</p>
@@ -595,7 +596,7 @@
         </div>
         <!-- BENCH -->
         <div class="card" data-cat="bench">
-          <div class="card-thumb" data-viz="bars" data-seed="13"></div>
+          <div class="card-thumb" data-shot="img/brainlike.jpg"></div>
           <span class="cat-badge">Bench</span>
           <h3>BrainLike benchmark portal</h3>
           <p>Report portal presenting results from the BrainLike benchmark.</p>
@@ -882,6 +883,13 @@
       var card = el.closest('.card');
       var cat = card ? card.getAttribute('data-cat') : 'rna';
       var m = MAP[cat] || MAP.rna;
+      var shot = el.getAttribute('data-shot');
+      if (shot) {
+        var t = card && card.querySelector('h3') ? card.querySelector('h3').textContent : 'portal';
+        el.classList.add('has-shot');
+        el.innerHTML = '<img class="cover-img" src="' + shot + '" alt="Screenshot of the ' + t + '" loading="lazy">';
+        return;
+      }
       var label = el.getAttribute('data-label') || m.label;
       el.classList.add(m.cls);
       el.innerHTML = '<span class="cover-dots" aria-hidden="true"></span>' +
