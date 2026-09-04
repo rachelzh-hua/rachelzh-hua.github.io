@@ -42,25 +42,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233b82f6'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' text-anchor='middle' fill='white'%3ERH%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f8068'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' text-anchor='middle' fill='white'%3ERH%3C/text%3E%3C/svg%3E">
   <style>
     :root {
-      --bg:#0a0e14; --bg-soft:#0e131c; --panel:#111826;
-      --border:#1e2a3a; --border-soft:#172230;
-      --text:#f1f5f9; --muted:#94a3b8; --faint:#64748b;
-      --accent:#8fb3f0; --accent-dim:#7098e0; --accent-glow:rgba(143,179,240,.20); --dot:rgba(255,255,255,.06);
-      --green:#7fd0a8; --purple:#c4a9f2; --amber:#f2cd8a; --cyan:#8fd6e6; --red:#f2a3a6;
-      --header-grad:linear-gradient(95deg,#6d95d6 0%,#86a9e6 55%,#a7c5f5 100%);
-      --header-line:rgba(255,255,255,.18);
+      --bg:#f7f7f5; --bg-soft:#ffffff; --panel:#ffffff;
+      --border:#e6e6e1; --border-soft:#eeeee9;
+      --text:#1a1a19; --muted:#5b5b56; --faint:#8c8c86;
+      --accent:#2f8068; --accent-dim:#256b57; --accent-glow:rgba(47,128,104,.12); --dot:rgba(26,26,25,.05);
+      --green:#2f8068; --purple:#6f5fb0; --amber:#9a7327; --cyan:#2c7a7d; --red:#b04a3c;
+      --header-line:rgba(0,0,0,.08);
       --font:'Inter',system-ui,-apple-system,sans-serif;
       --display:'Inter',system-ui,-apple-system,sans-serif;
       --mono:'JetBrains Mono',ui-monospace,monospace;
     }
-    :root[data-theme="light"] {
-      --bg:#f8fafc; --bg-soft:#ffffff; --panel:#ffffff;
-      --border:#e2e8f0; --border-soft:#eef2f6;
-      --text:#0f172a; --muted:#475569; --faint:#94a3b8;
-      --accent:#5f86dd; --accent-dim:#4f76d0; --accent-glow:rgba(95,134,221,.12); --dot:rgba(15,23,42,.06);
+    :root[data-theme="dark"] {
+      --bg:#0f1210; --bg-soft:#151815; --panel:#171a17;
+      --border:#282c28; --border-soft:#1f231f;
+      --text:#eef0ec; --muted:#9fa39c; --faint:#6c706a;
+      --accent:#54b493; --accent-dim:#469d7f; --accent-glow:rgba(84,180,147,.16); --dot:rgba(255,255,255,.05);
+      --green:#54b493; --purple:#b3a6ea; --amber:#d9b06a; --cyan:#6cc7c2; --red:#d98a7e;
+      --header-line:rgba(255,255,255,.12);
     }
     * { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -88,7 +89,7 @@
     header.scrolled { background:color-mix(in srgb, var(--bg) 86%, transparent); border-bottom-color:var(--border-soft); box-shadow:0 10px 34px -22px rgba(0,0,0,.55); }
     .nav { max-width:1120px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; gap:18px; }
     .brand { display:flex; align-items:center; gap:10px; font-weight:700; color:var(--text); letter-spacing:-.01em; }
-    .brand .mark { width:30px; height:30px; border-radius:8px; display:grid; place-items:center; background:var(--accent); border:none; font-family:var(--mono); font-size:13px; font-weight:700; color:#fff; box-shadow:0 3px 10px -3px var(--accent); }
+    .brand .mark { width:30px; height:30px; border-radius:8px; display:grid; place-items:center; background:var(--accent); border:none; font-family:var(--mono); font-size:13px; font-weight:700; color:#fff; }
     .nav-links { margin-left:auto; display:flex; align-items:center; gap:5px; }
     .nav-links a:not(.icon-btn):not(.cv-link) { position:relative; color:var(--muted); font-size:14px; font-weight:500; padding:9px 12px; border-radius:8px; transition:color .15s; }
     .nav-links a:not(.icon-btn):not(.cv-link):hover { color:var(--text); }
@@ -110,7 +111,8 @@
     .hero { position:relative; min-height:calc(100vh - 60px); display:flex; align-items:center; padding:56px 0 76px; border-bottom:1px solid var(--border-soft); overflow:hidden; }
     .hero::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; background:radial-gradient(560px 300px at 8% -10%, var(--accent-glow), transparent 70%), radial-gradient(480px 280px at 96% 4%, rgba(6,182,212,.10), transparent 70%); }
     /* aurora background */
-    .aurora { position:absolute; inset:-10% -5%; z-index:0; pointer-events:none; overflow:hidden; }
+    .aurora { display:none; }
+    .aurora-off { position:absolute; inset:-10% -5%; z-index:0; pointer-events:none; overflow:hidden; }
     .aurora span { position:absolute; border-radius:50%; filter:blur(70px); opacity:.5; mix-blend-mode:screen; }
     .aurora span:nth-child(1){ width:420px; height:420px; left:-4%; top:2%; background:radial-gradient(circle, rgba(96,150,240,.5), transparent 65%); animation:aur1 24s ease-in-out infinite; }
     .aurora span:nth-child(2){ width:380px; height:380px; right:2%; top:-6%; background:radial-gradient(circle, rgba(120,214,230,.42), transparent 65%); animation:aur2 30s ease-in-out infinite; }
@@ -152,8 +154,8 @@
     @media (max-width:820px){ .work-demo{ grid-template-columns:1fr; gap:22px; } }
     .cta { margin-top:28px; display:flex; flex-wrap:wrap; gap:12px; }
     .btn { display:inline-flex; align-items:center; gap:9px; font-weight:600; font-size:14.5px; padding:11px 20px; border-radius:10px; cursor:pointer; transition:transform .12s, box-shadow .2s, background .15s, border-color .15s; border:1px solid transparent; }
-    .btn-primary { background:var(--accent); color:#fff; box-shadow:0 6px 22px -8px var(--accent); }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 28px -8px var(--accent); }
+    .btn-primary { background:var(--accent); color:#fff; box-shadow:0 4px 14px -8px var(--accent); }
+    .btn-primary:hover { transform:translateY(-2px); background:var(--accent-dim); box-shadow:0 8px 20px -10px var(--accent); }
     .btn-ghost { background:transparent; border-color:var(--border); color:var(--text); }
     .btn-ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
     .btn svg { width:16px; height:16px; }
@@ -163,7 +165,7 @@
     .stat .lbl { font-size:12px; color:var(--muted); margin-top:2px; }
 
     /* live demo card */
-    .demo { border:1px solid var(--border); background:linear-gradient(180deg,var(--panel),var(--bg-soft)); border-radius:16px; padding:16px; will-change:transform; transition:transform .25s ease, box-shadow .3s ease; box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 22%,transparent), 0 40px 80px -34px rgba(0,0,0,.72), 0 0 70px -24px var(--accent); }
+    .demo { border:1px solid var(--border); background:var(--panel); border-radius:16px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04), 0 24px 48px -32px rgba(0,0,0,.22); }
     .demo-top { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
     .demo-dot { width:9px; height:9px; border-radius:50%; }
     .demo-title { font-family:var(--mono); font-size:12px; color:var(--muted); margin-left:2px; }
@@ -208,7 +210,7 @@
     @media (max-width:680px){ .grid { grid-template-columns:1fr; } }
     .card { position:relative; border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:22px; display:flex; flex-direction:column; transition:border-color .18s, transform .18s, box-shadow .25s; overflow:hidden; }
     .card::after { content:""; position:absolute; inset:0; border-radius:14px; pointer-events:none; background:radial-gradient(340px 160px at 100% 0%, var(--accent-glow), transparent 70%); opacity:0; transition:opacity .25s; }
-    .card:hover { transform:translateY(-4px); border-color:color-mix(in srgb, var(--accent) 55%, var(--border)); box-shadow:0 18px 40px -22px var(--accent); }
+    .card:hover { transform:translateY(-3px); border-color:color-mix(in srgb, var(--accent) 40%, var(--border)); box-shadow:0 16px 34px -24px rgba(0,0,0,.35); }
     .card:hover::after { opacity:1; }
     .card .cat-badge { position:absolute; top:13px; right:13px; z-index:2; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:5px; border:1px solid var(--border); color:var(--text); background:color-mix(in srgb,var(--panel) 78%,transparent); backdrop-filter:blur(4px); }
     .card-thumb { margin:-22px -22px 18px; height:178px; overflow:hidden; border-bottom:1px solid var(--border-soft); border-radius:14px 14px 0 0; background:#0b1016; position:relative; display:grid; place-items:center; }
@@ -267,8 +269,8 @@
     .cap-n { font-family:var(--mono); font-size:11px; color:var(--faint); margin-right:10px; white-space:nowrap; }
 
     /* header resume button */
-    .cv-link { margin-left:4px; background:var(--accent); border:1px solid var(--accent); color:#fff; padding:7px 14px; border-radius:8px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px -6px var(--accent); transition:transform .15s, box-shadow .2s; }
-    .cv-link:hover { transform:translateY(-1px); box-shadow:0 8px 20px -8px var(--accent); }
+    .cv-link { margin-left:4px; background:var(--accent); border:1px solid var(--accent); color:#fff; padding:7px 14px; border-radius:8px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px; transition:transform .15s, background .2s; }
+    .cv-link:hover { transform:translateY(-1px); background:var(--accent-dim); }
     .cv-link svg { width:14px; height:14px; }
 
     /* experience timeline */
@@ -435,7 +437,7 @@
   </style>
 </head>
 <body>
-  <a class="skip" href="#about">Skip to content</a>
+  <a class="skip" href="#projects">Skip to content</a>
   <div class="progress" id="progress" aria-hidden="true"></div>
   <button class="totop" id="totop" aria-label="Back to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
@@ -444,9 +446,9 @@
     <nav class="nav">
       <a class="brand" href="#top"><span class="mark">RH</span> Rachel Hua</a>
       <div class="nav-links">
+        <a href="#projects">Featured Work</a>
         <a class="hide-sm" href="#about">About</a>
         <a class="hide-sm" href="#experience">Experience</a>
-        <a href="#projects">Featured Work</a>
         <a class="hide-sm" href="#publications">Publications</a>
         <a class="hide-sm" href="#capabilities">Skills</a>
         <a class="cv-link" href="resume.pdf" target="_blank" rel="noopener">
@@ -501,77 +503,6 @@
   </section>
 
   <main>
-    <section id="about">
-      <span class="eyebrow">About</span>
-      <h2 class="title">Computational biology, end to end</h2>
-      <div class="about-grid">
-        <div>
-          <p>I'm a <strong>Ph.D.-trained computational biologist</strong> who builds AI-enabled, reproducible bioinformatics workflows for genomics and multi-omics research, then turns them into interactive tools that help biologists interpret their data.</p>
-          <p>I work across the full <strong>next-generation sequencing (NGS)</strong> stack, from raw reads through interpretation: <strong>spatial transcriptomics, single-cell sequencing, bulk RNA-seq, long-read genomics, variant calling, and epigenomics</strong>, with a strong emphasis on reproducibility, automation, and clear biological interpretation. I've delivered analyses across academic, biotech, and pharmaceutical projects, from raw QC through publication-quality figures.</p>
-          <p>I also bring <strong>hands-on wet-lab experience</strong>, including sequencing library preparation, RNA and DNA extraction, PCR and qPCR, gel electrophoresis, western blot, cell culture, and liquid-handling automation, along with the sample QC that goes with them. That bench fluency helps me design analyses that reflect how the data was actually generated and catch technical artifacts early.</p>
-          <p>During my Ph.D. in the Nuzhdin Lab I focused on <strong>population and evolutionary genomics</strong> in marine invertebrates, including de novo mutation-rate estimation and selection mapping.</p>
-        </div>
-        <div>
-          <div class="focus" style="margin-bottom:16px">
-            <h3>Education</h3>
-            <ul>
-              <li>Ph.D., Computational &amp; Molecular Biology · USC · 2025</li>
-              <li>B.S., Biochemistry · UCLA · 2020</li>
-            </ul>
-          </div>
-          <div class="focus">
-            <h3>Focus areas</h3>
-            <ul>
-              <li>Spatial transcriptomics &amp; single-cell genomics</li>
-              <li>Long-read sequencing &amp; variant interpretation</li>
-              <li>Wet-lab: library prep, extraction &amp; QC</li>
-              <li>Reproducible pipelines &amp; cloud automation</li>
-              <li>Population &amp; evolutionary genomics</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience">
-      <span class="eyebrow">Experience</span>
-      <h2 class="title">Where I've worked</h2>
-      <div class="xp">
-        <div class="xp-item">
-          <div class="xp-when">2026 — Present</div>
-          <div>
-            <div class="xp-role">Bioinformatics Engineer</div>
-            <div class="xp-org">Novaflow · YC-backed bioinformatics platform</div>
-            <p>Lead bioinformatics analyses across <strong>20+ client projects</strong> spanning academia, biotech, and pharma, delivering interactive web portals, reproducible workflows, and publication-quality figures. Recent work includes single-cell RNA-seq of muscle-invasive bladder cancer (PURE01), 10x Xenium spatial transcriptomics with matched H&amp;E for Merkel cell carcinoma, Xenium plus CODEX/PhenoCycler across Parkinson's-disease genotypes, CUT&amp;Tag epigenomics QC, polysome-profiling translational analysis, Oxford Nanopore ancestry and loss-of-heterozygosity mapping, and protein structure and design (AlphaFold, ESMFold, RFdiffusion).</p>
-          </div>
-        </div>
-        <div class="xp-item">
-          <div class="xp-when">2025 — 2026</div>
-          <div>
-            <div class="xp-role">Postdoctoral Fellow</div>
-            <div class="xp-org">Ambry Genetics / Tempus AI</div>
-            <p>Built and optimized PacBio long-read sequencing workflows and downstream NGS pipelines for structural-variant detection, generating high-quality data on a <strong>weekly</strong> basis. Applied ACMG criteria with gnomAD and ClinVar to interpret and curate variants for rare-disease research, and standardized processes for reproducibility and knowledge transfer.</p>
-          </div>
-        </div>
-        <div class="xp-item">
-          <div class="xp-when">2020 — 2025</div>
-          <div>
-            <div class="xp-role">Graduate Student Researcher</div>
-            <div class="xp-org">Nuzhdin Lab · University of Southern California</div>
-            <p>Designed a <strong>22-step</strong> high-throughput WGS pipeline to detect de novo germline mutations in bivalves, with tailored QC filters for robust mutation-rate estimation. Across <strong>5 years</strong>, also ran RNA-seq analyses of larval development, GWAS and selective-sweep mapping (XP-CLR, F<sub>ST</sub>), and molecular-ecology studies of environmental stress.</p>
-          </div>
-        </div>
-        <div class="xp-item">
-          <div class="xp-when">2018</div>
-          <div>
-            <div class="xp-role">Biomedical Engineer Intern</div>
-            <div class="xp-org">VoxelCloud</div>
-            <p>Developed a deep-learning pipeline for medical imaging, improving diagnostic performance by <strong>30%</strong> across <strong>200+</strong> validated images.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="projects">
       <span class="eyebrow">Featured Work</span>
       <h2 class="title">Featured work</h2>
@@ -749,6 +680,78 @@
       </div>
     </section>
 
+    <section id="about">
+      <span class="eyebrow">About</span>
+      <h2 class="title">Computational biology, end to end</h2>
+      <div class="about-grid">
+        <div>
+          <p>I'm a <strong>Ph.D.-trained computational biologist</strong> who builds AI-enabled, reproducible bioinformatics workflows for genomics and multi-omics research, then turns them into interactive tools that help biologists interpret their data.</p>
+          <p>I work across the full <strong>next-generation sequencing (NGS)</strong> stack, from raw reads through interpretation: <strong>spatial transcriptomics, single-cell sequencing, bulk RNA-seq, long-read genomics, variant calling, and epigenomics</strong>, with a strong emphasis on reproducibility, automation, and clear biological interpretation. I've delivered analyses across academic, biotech, and pharmaceutical projects, from raw QC through publication-quality figures.</p>
+          <p>I also bring <strong>hands-on wet-lab experience</strong>, including sequencing library preparation, RNA and DNA extraction, PCR and qPCR, gel electrophoresis, western blot, cell culture, and liquid-handling automation, along with the sample QC that goes with them. That bench fluency helps me design analyses that reflect how the data was actually generated and catch technical artifacts early.</p>
+          <p>During my Ph.D. in the Nuzhdin Lab I focused on <strong>population and evolutionary genomics</strong> in marine invertebrates, including de novo mutation-rate estimation and selection mapping.</p>
+        </div>
+        <div>
+          <div class="focus" style="margin-bottom:16px">
+            <h3>Education</h3>
+            <ul>
+              <li>Ph.D., Computational &amp; Molecular Biology · USC · 2025</li>
+              <li>B.S., Biochemistry · UCLA · 2020</li>
+            </ul>
+          </div>
+          <div class="focus">
+            <h3>Focus areas</h3>
+            <ul>
+              <li>Spatial transcriptomics &amp; single-cell genomics</li>
+              <li>Long-read sequencing &amp; variant interpretation</li>
+              <li>Wet-lab: library prep, extraction &amp; QC</li>
+              <li>Reproducible pipelines &amp; cloud automation</li>
+              <li>Population &amp; evolutionary genomics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <span class="eyebrow">Experience</span>
+      <h2 class="title">Where I've worked</h2>
+      <div class="xp">
+        <div class="xp-item">
+          <div class="xp-when">2026 — Present</div>
+          <div>
+            <div class="xp-role">Bioinformatics Engineer</div>
+            <div class="xp-org">Novaflow · YC-backed bioinformatics platform</div>
+            <p>Lead bioinformatics analyses across <strong>20+ client projects</strong> spanning academia, biotech, and pharma, delivering interactive web portals, reproducible workflows, and publication-quality figures. Recent work includes single-cell RNA-seq of muscle-invasive bladder cancer (PURE01), 10x Xenium spatial transcriptomics with matched H&amp;E for Merkel cell carcinoma, Xenium plus CODEX/PhenoCycler across Parkinson's-disease genotypes, CUT&amp;Tag epigenomics QC, polysome-profiling translational analysis, Oxford Nanopore ancestry and loss-of-heterozygosity mapping, and protein structure and design (AlphaFold, ESMFold, RFdiffusion).</p>
+          </div>
+        </div>
+        <div class="xp-item">
+          <div class="xp-when">2025 — 2026</div>
+          <div>
+            <div class="xp-role">Postdoctoral Fellow</div>
+            <div class="xp-org">Ambry Genetics / Tempus AI</div>
+            <p>Built and optimized PacBio long-read sequencing workflows and downstream NGS pipelines for structural-variant detection, generating high-quality data on a <strong>weekly</strong> basis. Applied ACMG criteria with gnomAD and ClinVar to interpret and curate variants for rare-disease research, and standardized processes for reproducibility and knowledge transfer.</p>
+          </div>
+        </div>
+        <div class="xp-item">
+          <div class="xp-when">2020 — 2025</div>
+          <div>
+            <div class="xp-role">Graduate Student Researcher</div>
+            <div class="xp-org">Nuzhdin Lab · University of Southern California</div>
+            <p>Designed a <strong>22-step</strong> high-throughput WGS pipeline to detect de novo germline mutations in bivalves, with tailored QC filters for robust mutation-rate estimation. Across <strong>5 years</strong>, also ran RNA-seq analyses of larval development, GWAS and selective-sweep mapping (XP-CLR, F<sub>ST</sub>), and molecular-ecology studies of environmental stress.</p>
+          </div>
+        </div>
+        <div class="xp-item">
+          <div class="xp-when">2018</div>
+          <div>
+            <div class="xp-role">Biomedical Engineer Intern</div>
+            <div class="xp-org">VoxelCloud</div>
+            <p>Developed a deep-learning pipeline for medical imaging, improving diagnostic performance by <strong>30%</strong> across <strong>200+</strong> validated images.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
     <section id="capabilities">
       <span class="eyebrow">Skills</span>
       <h2 class="title">Analyses &amp; the tools behind them</h2>
@@ -871,9 +874,9 @@
     var sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
     var moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
     var btn = document.getElementById('themeToggle'), icon = document.getElementById('themeIcon');
-    function paint(){ var d = root.getAttribute('data-theme')==='light'; icon.outerHTML = (d?moon:sun).replace('<svg','<svg id="themeIcon"'); icon = document.getElementById('themeIcon'); }
+    function paint(){ var dark = root.getAttribute('data-theme')==='dark'; icon.outerHTML = (dark?sun:moon).replace('<svg','<svg id="themeIcon"'); icon = document.getElementById('themeIcon'); }
     paint();
-    btn.addEventListener('click', function(){ var n = root.getAttribute('data-theme')==='light'?'dark':'light'; root.setAttribute('data-theme',n); try{localStorage.setItem('theme',n);}catch(e){} paint(); });
+    btn.addEventListener('click', function(){ var n = root.getAttribute('data-theme')==='dark'?'light':'dark'; root.setAttribute('data-theme',n); try{localStorage.setItem('theme',n);}catch(e){} paint(); });
   })();
 
   /* ============ project filters ============ */
@@ -1084,7 +1087,7 @@
   /* ============ section numbers, active nav, scroll reveal ============ */
   (function () {
     // quiet section numbers on the eyebrows
-    ['about','experience','projects','publications','capabilities'].forEach(function (id, i) {
+    ['projects','about','experience','publications','capabilities'].forEach(function (id, i) {
       var s = document.getElementById(id); if (!s) return;
       var e = s.querySelector('.eyebrow'); if (!e) return;
       e.classList.add('num');
